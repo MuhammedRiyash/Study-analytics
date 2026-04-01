@@ -70,7 +70,7 @@ export function CourseProvider({ children }) {
   const course = useMemo(() => getActiveCourse(), [getActiveCourse]);
 
   const getAllTasks = useCallback(() => {
-    return course.phases.flatMap((p) => p.tasks);
+    return course.phases.flatMap((p) => p.tasks.map((t) => ({ ...t, phase: p.name })));
   }, [course]);
 
   const allTasks = useMemo(() => getAllTasks(), [getAllTasks]);
@@ -130,20 +130,20 @@ export function CourseProvider({ children }) {
     return max;
   }, [completed]);
 
-  // Current phase: the phase containing the first incomplete task
+  // Current phase: the phase object containing the first incomplete task
   const currentPhase = useMemo(() => {
     for (const phase of course.phases) {
       const hasIncomplete = phase.tasks.some((t) => !completed.includes(t.d));
       if (hasIncomplete) return phase;
     }
-    return course.phases[course.phases.length - 1];
+    return course.phases.length > 0 ? course.phases[course.phases.length - 1] : { name: 'Complete!' };
   }, [course, completed]);
 
-  // Next task: first incomplete task
+  // Next task: first incomplete task (with phase name)
   const nextTask = useMemo(() => {
     for (const phase of course.phases) {
       for (const task of phase.tasks) {
-        if (!completed.includes(task.d)) return task;
+        if (!completed.includes(task.d)) return { ...task, phase: phase.name };
       }
     }
     return null;

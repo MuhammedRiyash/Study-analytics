@@ -10,7 +10,7 @@ export const OWNER = {
     linkedin: "https://www.linkedin.com/in/muhammed-riyash-5a0774393",
     twitter: "https://x.com/MD_Riyash_46",
     threads: "https://www.threads.com/@riyash.x.x",
-    instagram:
-      "https://www.instagram.com/riyash.x.x?igsh=MTBmcDl6bzh1dHFyNA==",
+    instagram: "https://www.instagram.com/riyash.x.x?igsh=MTBmcDl6bzh1dHFyNA==",
+    naukri: "",
   },
 };

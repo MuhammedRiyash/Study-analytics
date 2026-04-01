@@ -22,6 +22,25 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      window.onerror = function(msg, src, line, col, err) {
+        document.getElementById('root').innerHTML =
+          '<div style="padding:40px;color:#ef4444;font-family:monospace;font-size:14px;background:#0a0e1a;min-height:100vh">' +
+          '<h2 style="color:#f1f5f9;margin-bottom:16px">Error Loading App</h2>' +
+          '<p>' + msg + '</p>' +
+          '<p style="color:#64748b;margin-top:8px">' + (src||'') + ':' + (line||'') + '</p>' +
+          '<pre style="color:#fbbf24;margin-top:16px;white-space:pre-wrap">' + (err && err.stack ? err.stack : '') + '</pre>' +
+          '</div>';
+      };
+      window.addEventListener('unhandledrejection', function(e) {
+        document.getElementById('root').innerHTML =
+          '<div style="padding:40px;color:#ef4444;font-family:monospace;font-size:14px;background:#0a0e1a;min-height:100vh">' +
+          '<h2 style="color:#f1f5f9;margin-bottom:16px">Error Loading App</h2>' +
+          '<p>' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)) + '</p>' +
+          '<pre style="color:#fbbf24;margin-top:16px;white-space:pre-wrap">' + (e.reason && e.reason.stack ? e.reason.stack : '') + '</pre>' +
+          '</div>';
+      });
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
