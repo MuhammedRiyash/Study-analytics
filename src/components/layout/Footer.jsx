@@ -1,4 +1,4 @@
-import { Linkedin, Twitter, Instagram, AtSign } from 'lucide-react'
+import { Linkedin, Twitter, Instagram, AtSign, Globe } from 'lucide-react'
 import { useCourse } from '../../context/CourseContext'
 import { OWNER } from '../../config/siteConfig'
 
@@ -7,6 +7,7 @@ const SOCIAL_LINKS = [
   { href: OWNER.social.twitter, icon: Twitter, label: 'Twitter' },
   { href: OWNER.social.threads, icon: AtSign, label: 'Threads' },
   { href: OWNER.social.instagram, icon: Instagram, label: 'Instagram' },
+  { href: OWNER.social.portfolio, icon: Globe, label: 'Portfolio' },
 ]
 
 export default function Footer() {
