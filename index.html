@@ -7,10 +7,10 @@
 <meta name="description" content="Track your 100-day digital marketing mastery journey with analytics, achievements, and gamification."/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/recharts@2.10.4/umd/Recharts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -125,9 +125,13 @@ body{font-family:'Inter',sans-serif;overflow-x:hidden}
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
+<script type="text/babel" data-type="module">
 const { useState, useEffect, useMemo, useCallback, useRef } = React;
-const { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip: RTooltip, Legend, LineChart, Line, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, AreaChart, Area } = Recharts;
+const { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip: RTooltip, Legend, LineChart, Line, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, AreaChart, Area } = window.Recharts || {};
+
+function clamp(min, vw, max) {
+  return `clamp(${min}px, ${vw}vw, ${max}px)`;
+}
 
 const TASKS = [
   {d:1,phase:"SEO Fundamentals",task:"Understand how search engines crawl, index & rank pages",cat:"SEO",lvl:"Beginner"},
@@ -1001,11 +1005,12 @@ function App() {
   );
 }
 
-function clamp(min, vw, max) {
-  return `clamp(${min}px, ${vw}vw, ${max}px)`;
+try {
+  ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+} catch(e) {
+  document.getElementById("root").innerHTML = '<div style="padding:40px;color:red;font-family:monospace"><h2>Error loading app</h2><pre>'+e.message+'</pre></div>';
+  console.error(e);
 }
-
-ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
 </script>
 </body>
 </html>
