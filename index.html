@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Study Analytics — 100 Days Digital Marketing Mastery</title>
+<meta name="description" content="Track your 100-day digital marketing mastery journey with analytics, achievements, and gamification."/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;overflow-x:hidden}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes confetti{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(-100px) rotate(720deg);opacity:0}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(99,102,241,.3)}50%{box-shadow:0 0 40px rgba(99,102,241,.6)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px);max-height:0}to{opacity:1;transform:translateY(0);max-height:500px}}
+@keyframes bounceIn{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes ripple{to{transform:scale(4);opacity:0}}
+@keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+@keyframes celebrate{0%{transform:scale(1) rotate(0)}25%{transform:scale(1.3) rotate(-10deg)}50%{transform:scale(1) rotate(10deg)}75%{transform:scale(1.2) rotate(-5deg)}100%{transform:scale(1) rotate(0)}}
+
+.fade-up{animation:fadeUp .5s ease both}
+.scale-in{animation:scaleIn .4s ease both}
+.float-anim{animation:float 3s ease-in-out infinite}
+.bounce-in{animation:bounceIn .5s ease both}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-tertiary)}
+
+/* Theme vars */
+:root{
+  --bg-primary:#f8fafc;--bg-secondary:#ffffff;--bg-tertiary:#f1f5f9;
+  --text-primary:#0f172a;--text-secondary:#475569;--text-tertiary:#94a3b8;
+  --border:#e2e8f0;--border-hover:#cbd5e1;
+  --accent:#6366f1;--accent-light:rgba(99,102,241,.1);--accent-glow:rgba(99,102,241,.3);
+  --success:#22c55e;--success-light:rgba(34,197,94,.1);
+  --warning:#f59e0b;--danger:#ef4444;
+  --header-bg:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);
+  --card-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --card-shadow-hover:0 10px 40px rgba(0,0,0,.08);
+  --glass:rgba(255,255,255,.7);--glass-border:rgba(255,255,255,.2);
+}
+[data-theme="dark"]{
+  --bg-primary:#0a0e1a;--bg-secondary:#111827;--bg-tertiary:#1e293b;
+  --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-tertiary:#64748b;
+  --border:#1e293b;--border-hover:#334155;
+  --accent:#818cf8;--accent-light:rgba(129,140,248,.12);--accent-glow:rgba(129,140,248,.3);
+  --success:#4ade80;--success-light:rgba(74,222,128,.12);
+  --warning:#fbbf24;--danger:#f87171;
+  --header-bg:linear-gradient(135deg,#030712 0%,#111827 50%,#030712 100%);
+  --card-shadow:0 1px 3px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);
+  --card-shadow-hover:0 10px 40px rgba(0,0,0,.4);
+  --glass:rgba(17,24,39,.8);--glass-border:rgba(255,255,255,.06);
+}
+
+/* Transitions */
+.theme-transition,.theme-transition *{transition:background .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease}
+
+/* Interactive elements */
+.task-row{transition:all .2s ease;cursor:pointer}
+.task-row:hover{transform:translateX(4px);box-shadow:var(--card-shadow-hover)!important}
+.task-row:active{transform:scale(.99)}
+.tab-btn{transition:all .25s ease;position:relative;overflow:hidden}
+.tab-btn:hover{transform:translateY(-2px)}
+.pill{transition:all .2s ease;cursor:pointer}.pill:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.chart-card{transition:all .3s ease}.chart-card:hover{transform:translateY(-4px);box-shadow:var(--card-shadow-hover)!important}
+.stat-card{transition:all .3s ease}.stat-card:hover{transform:translateY(-3px) scale(1.02)}
+.grid-card{transition:all .3s ease;cursor:pointer}.grid-card:hover{transform:translateY(-5px);box-shadow:var(--card-shadow-hover)!important}
+.phase-row{transition:all .25s ease}.phase-row:hover{transform:scale(1.003)}
+.action-btn{transition:all .2s ease;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+.action-btn:hover{transform:translateY(-1px)}
+.action-btn:active{transform:scale(.97)}
+
+/* Welcome screen */
+.welcome-bg{background:linear-gradient(135deg,#0a0f1e 0%,#0f172a 30%,#1a1f3a 60%,#0f172a 100%);animation:gradientShift 8s ease infinite;background-size:200% 200%}
+.shimmer-text{background:linear-gradient(90deg,#fff 0%,#818cf8 25%,#c084fc 50%,#818cf8 75%,#fff 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s linear infinite}
+.input-glow:focus{box-shadow:0 0 0 3px var(--accent-glow),0 0 30px rgba(99,102,241,.12);border-color:var(--accent)!important;outline:none}
+.start-btn{background:linear-gradient(135deg,#6366f1,#8b5cf6);transition:all .3s ease}
+.start-btn:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 30px rgba(99,102,241,.4)}
+.start-btn:active{transform:scale(.98)}
+
+/* Timer */
+.timer-ring{transition:stroke-dashoffset .5s linear}
+.streak-badge{animation:pulse 2s ease infinite}
+
+/* Tooltip */
+.tooltip{position:relative}.tooltip:hover .tooltip-text{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.tooltip-text{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:var(--text-primary);color:var(--bg-primary);padding:6px 12px;border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;opacity:0;pointer-events:none;transition:all .2s ease;z-index:100}
+
+/* Search */
+.search-input{transition:all .3s ease}
+.search-input:focus{box-shadow:0 0 0 3px var(--accent-glow);border-color:var(--accent)!important;outline:none}
+
+/* Mobile */
+@media(max-width:768px){
+  .mobile-stack{flex-direction:column!important}
+  .mobile-full{width:100%!important;min-width:0!important}
+  .mobile-hide{display:none!important}
+  .mobile-small-text{font-size:11px!important}
+  .mobile-grid-1{grid-template-columns:1fr!important}
+}
+@media(max-width:480px){
+  .mobile-xs-stack{flex-direction:column!important}
+  .mobile-xs-full{width:100%!important}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useMemo, useCallback, useRef } = React;
+const { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip: RTooltip, Legend, LineChart, Line, ResponsiveContainer, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, AreaChart, Area } = Recharts;
+
+const TASKS = [
+  {d:1,phase:"SEO Fundamentals",task:"Understand how search engines crawl, index & rank pages",cat:"SEO",lvl:"Beginner"},
+  {d:2,phase:"SEO Fundamentals",task:"Learn keyword research basics — search intent & volume",cat:"SEO",lvl:"Beginner"},
+  {d:3,phase:"SEO Fundamentals",task:"Hands-on: Use Google Keyword Planner & Ubersuggest",cat:"SEO",lvl:"Beginner"},
+  {d:4,phase:"SEO Fundamentals",task:"Study long-tail vs short-tail keywords strategy",cat:"SEO",lvl:"Beginner"},
+  {d:5,phase:"SEO Fundamentals",task:"Learn about SERP features — snippets, PAA, local pack",cat:"SEO",lvl:"Beginner"},
+  {d:6,phase:"SEO Fundamentals",task:"Competitor keyword analysis with SEMrush / Ahrefs",cat:"SEO",lvl:"Beginner"},
+  {d:7,phase:"SEO Fundamentals",task:"Create a keyword map for a sample project",cat:"SEO",lvl:"Beginner"},
+  {d:8,phase:"SEO Fundamentals",task:"Quiz & review: SEO fundamentals checkpoint",cat:"SEO",lvl:"Beginner"},
+  {d:9,phase:"On-Page SEO",task:"Title tags, meta descriptions & header hierarchy",cat:"SEO",lvl:"Beginner"},
+  {d:10,phase:"On-Page SEO",task:"URL structure & internal linking best practices",cat:"SEO",lvl:"Beginner"},
+  {d:11,phase:"On-Page SEO",task:"Image optimization — alt text, compression, WebP",cat:"SEO",lvl:"Beginner"},
+  {d:12,phase:"On-Page SEO",task:"Content optimization for target keywords",cat:"SEO",lvl:"Intermediate"},
+  {d:13,phase:"On-Page SEO",task:"Schema markup & structured data basics",cat:"SEO",lvl:"Intermediate"},
+  {d:14,phase:"On-Page SEO",task:"Hands-on: Audit a live website for on-page issues",cat:"SEO",lvl:"Intermediate"},
+  {d:15,phase:"On-Page SEO",task:"E-E-A-T principles & content quality signals",cat:"SEO",lvl:"Intermediate"},
+  {d:16,phase:"On-Page SEO",task:"Mini-project: Optimize 5 pages of a sample site",cat:"SEO",lvl:"Intermediate"},
+  {d:17,phase:"Technical SEO",task:"Site speed & Core Web Vitals optimization",cat:"SEO",lvl:"Intermediate"},
+  {d:18,phase:"Technical SEO",task:"Mobile-first indexing & responsive design",cat:"SEO",lvl:"Intermediate"},
+  {d:19,phase:"Technical SEO",task:"XML sitemaps & robots.txt configuration",cat:"SEO",lvl:"Intermediate"},
+  {d:20,phase:"Technical SEO",task:"Canonical tags, redirects & duplicate content",cat:"SEO",lvl:"Intermediate"},
+  {d:21,phase:"Technical SEO",task:"Crawl budget optimization & log file analysis",cat:"SEO",lvl:"Advanced"},
+  {d:22,phase:"Technical SEO",task:"HTTPS, security headers & site architecture",cat:"SEO",lvl:"Intermediate"},
+  {d:23,phase:"Technical SEO",task:"Hands-on: Full technical audit with Screaming Frog",cat:"SEO",lvl:"Advanced"},
+  {d:24,phase:"Technical SEO",task:"Checkpoint: Technical SEO audit report",cat:"SEO",lvl:"Advanced"},
+  {d:25,phase:"Off-Page SEO",task:"Backlink fundamentals — DA, PA, link types",cat:"SEO",lvl:"Intermediate"},
+  {d:26,phase:"Off-Page SEO",task:"Guest posting & outreach strategy",cat:"SEO",lvl:"Intermediate"},
+  {d:27,phase:"Off-Page SEO",task:"Broken link building & resource page tactics",cat:"SEO",lvl:"Advanced"},
+  {d:28,phase:"Off-Page SEO",task:"Local SEO — Google Business Profile optimization",cat:"SEO",lvl:"Intermediate"},
+  {d:29,phase:"Off-Page SEO",task:"Online reputation & review management",cat:"SEO",lvl:"Intermediate"},
+  {d:30,phase:"Off-Page SEO",task:"Mini-project: Build 10 quality backlinks plan",cat:"SEO",lvl:"Advanced"},
+  {d:31,phase:"PPC & Google Ads",task:"PPC fundamentals — CPC, CPM, CPA, Quality Score",cat:"PPC",lvl:"Beginner"},
+  {d:32,phase:"PPC & Google Ads",task:"Google Ads account structure — campaigns, ad groups",cat:"PPC",lvl:"Beginner"},
+  {d:33,phase:"PPC & Google Ads",task:"Keyword match types & negative keywords",cat:"PPC",lvl:"Beginner"},
+  {d:34,phase:"PPC & Google Ads",task:"Writing high-CTR ad copy & responsive search ads",cat:"PPC",lvl:"Beginner"},
+  {d:35,phase:"PPC & Google Ads",task:"Ad extensions — sitelinks, callouts, structured snippets",cat:"PPC",lvl:"Intermediate"},
+  {d:36,phase:"PPC & Google Ads",task:"Bidding strategies — manual, enhanced, target CPA/ROAS",cat:"PPC",lvl:"Intermediate"},
+  {d:37,phase:"PPC & Google Ads",task:"Landing page optimization for PPC campaigns",cat:"PPC",lvl:"Intermediate"},
+  {d:38,phase:"PPC & Google Ads",task:"Google Ads conversion tracking setup",cat:"PPC",lvl:"Intermediate"},
+  {d:39,phase:"PPC & Google Ads",task:"Remarketing & RLSA campaigns",cat:"PPC",lvl:"Intermediate"},
+  {d:40,phase:"PPC & Google Ads",task:"Shopping Ads & Google Merchant Center",cat:"PPC",lvl:"Intermediate"},
+  {d:41,phase:"PPC & Google Ads",task:"Performance Max campaigns deep dive",cat:"PPC",lvl:"Advanced"},
+  {d:42,phase:"PPC & Google Ads",task:"A/B testing ads & ad rotation strategies",cat:"PPC",lvl:"Intermediate"},
+  {d:43,phase:"PPC & Google Ads",task:"Budget allocation & campaign optimization",cat:"PPC",lvl:"Advanced"},
+  {d:44,phase:"PPC & Google Ads",task:"Google Ads scripts & automation basics",cat:"PPC",lvl:"Advanced"},
+  {d:45,phase:"PPC & Google Ads",task:"Project: Launch a mock Google Ads campaign",cat:"PPC",lvl:"Advanced"},
+  {d:46,phase:"Social Media Ads",task:"Facebook/Meta Ads Manager setup & structure",cat:"Ads",lvl:"Beginner"},
+  {d:47,phase:"Social Media Ads",task:"Facebook audience targeting — custom, lookalike, saved",cat:"Ads",lvl:"Intermediate"},
+  {d:48,phase:"Social Media Ads",task:"Instagram Ads — formats, reels, stories, carousels",cat:"Ads",lvl:"Intermediate"},
+  {d:49,phase:"Social Media Ads",task:"Facebook Pixel & Conversions API setup",cat:"Ads",lvl:"Intermediate"},
+  {d:50,phase:"Social Media Ads",task:"LinkedIn Ads — B2B targeting & lead gen forms",cat:"Ads",lvl:"Intermediate"},
+  {d:51,phase:"Social Media Ads",task:"Twitter/X Ads & YouTube Ads overview",cat:"Ads",lvl:"Intermediate"},
+  {d:52,phase:"Social Media Ads",task:"TikTok Ads — creative best practices",cat:"Ads",lvl:"Intermediate"},
+  {d:53,phase:"Social Media Ads",task:"Social media ad copywriting & creative design",cat:"Ads",lvl:"Intermediate"},
+  {d:54,phase:"Social Media Ads",task:"Retargeting across social platforms",cat:"Ads",lvl:"Advanced"},
+  {d:55,phase:"Social Media Ads",task:"Project: Create a multi-platform ad campaign plan",cat:"Ads",lvl:"Advanced"},
+  {d:56,phase:"Display & Video Ads",task:"Google Display Network — targeting & placements",cat:"Ads",lvl:"Intermediate"},
+  {d:57,phase:"Display & Video Ads",task:"Banner ad design principles & responsive ads",cat:"Ads",lvl:"Intermediate"},
+  {d:58,phase:"Display & Video Ads",task:"YouTube Ads — TrueView, bumper, discovery formats",cat:"Ads",lvl:"Intermediate"},
+  {d:59,phase:"Display & Video Ads",task:"Video ad scripting & production basics",cat:"Ads",lvl:"Intermediate"},
+  {d:60,phase:"Display & Video Ads",task:"Programmatic advertising & DSP overview",cat:"Ads",lvl:"Advanced"},
+  {d:61,phase:"Display & Video Ads",task:"Connected TV & OTT advertising trends",cat:"Ads",lvl:"Advanced"},
+  {d:62,phase:"Display & Video Ads",task:"Checkpoint: Paid media strategy document",cat:"Ads",lvl:"Advanced"},
+  {d:63,phase:"Content Marketing",task:"Content strategy framework & content pillars",cat:"Content",lvl:"Beginner"},
+  {d:64,phase:"Content Marketing",task:"Blog writing for SEO — structure, length, readability",cat:"Content",lvl:"Beginner"},
+  {d:65,phase:"Content Marketing",task:"Content calendar creation & planning tools",cat:"Content",lvl:"Beginner"},
+  {d:66,phase:"Content Marketing",task:"Visual content — infographics, carousels, thumbnails",cat:"Content",lvl:"Intermediate"},
+  {d:67,phase:"Content Marketing",task:"Video content strategy — YouTube, shorts, reels",cat:"Content",lvl:"Intermediate"},
+  {d:68,phase:"Content Marketing",task:"Podcast & audio content marketing",cat:"Content",lvl:"Intermediate"},
+  {d:69,phase:"Content Marketing",task:"Content distribution & amplification channels",cat:"Content",lvl:"Intermediate"},
+  {d:70,phase:"Content Marketing",task:"Content repurposing — one piece, 10 formats",cat:"Content",lvl:"Intermediate"},
+  {d:71,phase:"Content Marketing",task:"AI tools for content creation & scaling",cat:"Content",lvl:"Advanced"},
+  {d:72,phase:"Content Marketing",task:"Project: Build a 30-day content calendar",cat:"Content",lvl:"Advanced"},
+  {d:73,phase:"Email Marketing",task:"Email marketing fundamentals & platform setup",cat:"Email",lvl:"Beginner"},
+  {d:74,phase:"Email Marketing",task:"List building strategies & lead magnets",cat:"Email",lvl:"Beginner"},
+  {d:75,phase:"Email Marketing",task:"Email copywriting — subject lines, body, CTAs",cat:"Email",lvl:"Intermediate"},
+  {d:76,phase:"Email Marketing",task:"Email design — templates, responsive layouts",cat:"Email",lvl:"Intermediate"},
+  {d:77,phase:"Email Marketing",task:"Automation workflows — welcome, nurture, win-back",cat:"Email",lvl:"Intermediate"},
+  {d:78,phase:"Email Marketing",task:"Segmentation & personalization strategies",cat:"Email",lvl:"Intermediate"},
+  {d:79,phase:"Email Marketing",task:"Deliverability, spam filters & compliance",cat:"Email",lvl:"Intermediate"},
+  {d:80,phase:"Email Marketing",task:"Project: Design a 5-email nurture sequence",cat:"Email",lvl:"Advanced"},
+  {d:81,phase:"Analytics & Data",task:"Google Analytics 4 — setup & navigation",cat:"Analytics",lvl:"Beginner"},
+  {d:82,phase:"Analytics & Data",task:"GA4 events, conversions & custom dimensions",cat:"Analytics",lvl:"Intermediate"},
+  {d:83,phase:"Analytics & Data",task:"Google Tag Manager — tags, triggers, variables",cat:"Analytics",lvl:"Intermediate"},
+  {d:84,phase:"Analytics & Data",task:"UTM parameters & campaign tracking",cat:"Analytics",lvl:"Intermediate"},
+  {d:85,phase:"Analytics & Data",task:"Google Search Console deep dive",cat:"Analytics",lvl:"Intermediate"},
+  {d:86,phase:"Analytics & Data",task:"Looker Studio dashboard creation",cat:"Analytics",lvl:"Intermediate"},
+  {d:87,phase:"Analytics & Data",task:"Attribution models — first-click, last-click, data-driven",cat:"Analytics",lvl:"Advanced"},
+  {d:88,phase:"Analytics & Data",task:"Project: Build a marketing performance dashboard",cat:"Analytics",lvl:"Advanced"},
+  {d:89,phase:"CRO",task:"CRO fundamentals — funnels, heuristics, user behavior",cat:"CRO",lvl:"Intermediate"},
+  {d:90,phase:"CRO",task:"Heatmaps, session recordings & user testing tools",cat:"CRO",lvl:"Intermediate"},
+  {d:91,phase:"CRO",task:"A/B testing methodology & tools (Optimizely, VWO)",cat:"CRO",lvl:"Intermediate"},
+  {d:92,phase:"CRO",task:"Landing page optimization — above the fold, trust signals",cat:"CRO",lvl:"Advanced"},
+  {d:93,phase:"CRO",task:"Project: CRO audit & test plan for a live site",cat:"CRO",lvl:"Advanced"},
+  {d:94,phase:"Advanced Strategy",task:"Omnichannel marketing strategy & customer journey",cat:"Strategy",lvl:"Advanced"},
+  {d:95,phase:"Advanced Strategy",task:"Marketing automation — HubSpot, Marketo overview",cat:"Strategy",lvl:"Advanced"},
+  {d:96,phase:"Advanced Strategy",task:"Budget planning & ROI calculation across channels",cat:"Strategy",lvl:"Advanced"},
+  {d:97,phase:"Advanced Strategy",task:"AI & emerging trends in digital marketing 2025+",cat:"Strategy",lvl:"Advanced"},
+  {d:98,phase:"Capstone",task:"Full digital marketing strategy for a brand",cat:"Strategy",lvl:"Advanced"},
+  {d:99,phase:"Capstone",task:"Presentation & portfolio preparation",cat:"Strategy",lvl:"Advanced"},
+  {d:100,phase:"Capstone",task:"Final review, certification prep & next steps",cat:"Strategy",lvl:"Advanced"},
+];
+
+const PC = {"SEO Fundamentals":"#6366f1","On-Page SEO":"#818cf8","Technical SEO":"#a78bfa","Off-Page SEO":"#c4b5fd","PPC & Google Ads":"#3b82f6","Social Media Ads":"#06b6d4","Display & Video Ads":"#0ea5e9","Content Marketing":"#f97316","Email Marketing":"#ec4899","Analytics & Data":"#8b5cf6","CRO":"#14b8a6","Advanced Strategy":"#ef4444","Capstone":"#f59e0b"};
+const CC = {"SEO":"#6366f1","PPC":"#3b82f6","Ads":"#06b6d4","Content":"#f97316","Email":"#ec4899","Analytics":"#8b5cf6","CRO":"#14b8a6","Strategy":"#ef4444"};
+const LC = {"Beginner":"#22c55e","Intermediate":"#f59e0b","Advanced":"#ef4444"};
+const PO = [...new Set(TASKS.map(t=>t.phase))];
+
+const MOTIVATIONS = [
+  "Every expert was once a beginner. Keep going!",
+  "The best time to start was yesterday. The next best is now.",
+  "Marketing mastery is built one day at a time.",
+  "You're investing in skills that pay dividends forever.",
+  "Small daily progress adds up to massive results.",
+  "Consistency beats intensity. Show up every day.",
+  "You're building a superpower — one task at a time.",
+  "The journey of a thousand miles begins with a single step.",
+  "Don't watch the clock; do what it does — keep going.",
+  "Success is the sum of small efforts repeated day in and day out."
+];
+
+const ACHIEVEMENTS = [
+  {id:"first",title:"First Step",desc:"Complete your first task",icon:"🎯",check:c=>Object.keys(c).length>=1},
+  {id:"five",title:"Getting Started",desc:"Complete 5 tasks",icon:"⭐",check:c=>Object.keys(c).length>=5},
+  {id:"ten",title:"Double Digits",desc:"Complete 10 tasks",icon:"🔥",check:c=>Object.keys(c).length>=10},
+  {id:"quarter",title:"Quarter Way",desc:"Complete 25 tasks",icon:"🏅",check:c=>Object.keys(c).length>=25},
+  {id:"half",title:"Halfway Hero",desc:"Complete 50 tasks",icon:"🏆",check:c=>Object.keys(c).length>=50},
+  {id:"seventy",title:"Unstoppable",desc:"Complete 75 tasks",icon:"💎",check:c=>Object.keys(c).length>=75},
+  {id:"ninety",title:"Almost There",desc:"Complete 90 tasks",icon:"🌟",check:c=>Object.keys(c).length>=90},
+  {id:"complete",title:"Marketing Master",desc:"Complete all 100 tasks",icon:"👑",check:c=>Object.keys(c).length>=100},
+  {id:"seo_done",title:"SEO Expert",desc:"Complete all SEO tasks",icon:"🔍",check:c=>TASKS.filter(t=>t.cat==="SEO").every(t=>c[t.d])},
+  {id:"ppc_done",title:"PPC Pro",desc:"Complete all PPC tasks",icon:"💰",check:c=>TASKS.filter(t=>t.cat==="PPC").every(t=>c[t.d])},
+  {id:"beginner_done",title:"Foundations Set",desc:"Complete all Beginner tasks",icon:"📚",check:c=>TASKS.filter(t=>t.lvl==="Beginner").every(t=>c[t.d])},
+  {id:"phase1",title:"Phase Pioneer",desc:"Complete your first phase",icon:"🚀",check:c=>PO.some(p=>TASKS.filter(t=>t.phase===p).every(t=>c[t.d]))},
+];
+
+const XP_PER_TASK = {"Beginner":10,"Intermediate":20,"Advanced":35};
+const LEVELS = [
+  {name:"Rookie",min:0},{name:"Learner",min:50},{name:"Student",min:150},{name:"Practitioner",min:300},
+  {name:"Specialist",min:500},{name:"Expert",min:750},{name:"Master",min:1000},{name:"Guru",min:1400},{name:"Legend",min:1900}
+];
+
+function getLevel(xp) {
+  let lvl = LEVELS[0];
+  for (const l of LEVELS) { if (xp >= l.min) lvl = l; }
+  const idx = LEVELS.indexOf(lvl);
+  const next = LEVELS[idx+1];
+  return { ...lvl, idx, next, progress: next ? ((xp - lvl.min) / (next.min - lvl.min)) * 100 : 100 };
+}
+
+function App() {
+  const [user, setUser] = useState(null);
+  const [nameInput, setNameInput] = useState("");
+  const [completed, setCompleted] = useState({});
+  const [notes, setNotes] = useState({});
+  const [tab, setTab] = useState("dashboard");
+  const [filterPhase, setFilterPhase] = useState("All");
+  const [filterLevel, setFilterLevel] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState("list");
+  const [loaded, setLoaded] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [justCompleted, setJustCompleted] = useState(null);
+  const [welcomeFade, setWelcomeFade] = useState(false);
+  const [chartFilter, setChartFilter] = useState("all");
+  const [theme, setTheme] = useState("dark");
+  const [showAchievement, setShowAchievement] = useState(null);
+  const [expandedTask, setExpandedTask] = useState(null);
+  const [pomodoroActive, setPomodoroActive] = useState(false);
+  const [pomodoroTime, setPomodoroTime] = useState(25 * 60);
+  const [pomodoroTask, setPomodoroTask] = useState(null);
+  const [showNoteFor, setShowNoteFor] = useState(null);
+  const [noteInput, setNoteInput] = useState("");
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const timerRef = useRef(null);
+  const prevAchievements = useRef(new Set());
+
+  // Load from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("study-analytics-v3");
+      if (saved) {
+        const d = JSON.parse(saved);
+        setCompleted(d.completed || {});
+        setUser(d.user || null);
+        setNotes(d.notes || {});
+        setTheme(d.theme || "dark");
+      }
+    } catch {}
+    setLoaded(true);
+  }, []);
+
+  // Save to localStorage
+  useEffect(() => {
+    if (!loaded) return;
+    try {
+      localStorage.setItem("study-analytics-v3", JSON.stringify({ completed, user, notes, theme }));
+    } catch {}
+  }, [completed, user, notes, theme, loaded]);
+
+  // Apply theme
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.body.style.background = theme === "dark" ? "#0a0e1a" : "#f8fafc";
+  }, [theme]);
+
+  // Pomodoro timer
+  useEffect(() => {
+    if (pomodoroActive && pomodoroTime > 0) {
+      timerRef.current = setInterval(() => {
+        setPomodoroTime(t => {
+          if (t <= 1) { setPomodoroActive(false); return 0; }
+          return t - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [pomodoroActive]);
+
+  // Achievement checker
+  useEffect(() => {
+    if (!loaded || !user) return;
+    const earned = ACHIEVEMENTS.filter(a => a.check(completed));
+    const newOnes = earned.filter(a => !prevAchievements.current.has(a.id));
+    if (newOnes.length > 0) {
+      setShowAchievement(newOnes[newOnes.length - 1]);
+      setTimeout(() => setShowAchievement(null), 3000);
+    }
+    prevAchievements.current = new Set(earned.map(a => a.id));
+  }, [completed, loaded, user]);
+
+  const toggle = useCallback((day) => {
+    const wasDone = !!completed[day];
+    setCompleted(prev => {
+      const next = { ...prev };
+      if (next[day]) delete next[day]; else next[day] = Date.now();
+      return next;
+    });
+    if (!wasDone) {
+      setJustCompleted(day);
+      setShowConfetti(true);
+      setTimeout(() => { setShowConfetti(false); setJustCompleted(null); }, 1500);
+    }
+  }, [completed]);
+
+  const totalDone = Object.keys(completed).length;
+  const pct = Math.round((totalDone / 100) * 100);
+  const xp = useMemo(() => TASKS.reduce((sum, t) => sum + (completed[t.d] ? XP_PER_TASK[t.lvl] : 0), 0), [completed]);
+  const level = useMemo(() => getLevel(xp), [xp]);
+
+  const catData = useMemo(() => { const c = {}; TASKS.forEach(t => { if(!c[t.cat]) c[t.cat]={name:t.cat,total:0,done:0}; c[t.cat].total++; if(completed[t.d]) c[t.cat].done++; }); return Object.values(c); }, [completed]);
+  const phaseData = useMemo(() => { const p = {}; TASKS.forEach(t => { if(!p[t.phase]) p[t.phase]={name:t.phase,total:0,done:0}; p[t.phase].total++; if(completed[t.d]) p[t.phase].done++; }); return PO.map(ph => p[ph]); }, [completed]);
+  const lvlData = useMemo(() => { const l = {}; TASKS.forEach(t => { if(!l[t.lvl]) l[t.lvl]={name:t.lvl,total:0,done:0}; l[t.lvl].total++; if(completed[t.d]) l[t.lvl].done++; }); return ["Beginner","Intermediate","Advanced"].map(lv => l[lv]); }, [completed]);
+  const cumulativeData = useMemo(() => { let cum = 0; return Array.from({length:100},(_,i) => { if(completed[i+1]) cum++; return {day:i+1,done:cum,target:i+1}; }); }, [completed]);
+  const radarData = useMemo(() => catData.map(c => ({ subject: c.name, pct: c.total ? Math.round(c.done/c.total*100) : 0, full: 100 })), [catData]);
+  const streak = useMemo(() => { let s = 0; for (let i = 100; i >= 1; i--) { if (completed[i]) s++; else if (s > 0) break; } return s; }, [completed]);
+  const currentPhase = useMemo(() => { for (let i = 0; i < TASKS.length; i++) { if (!completed[TASKS[i].d]) return TASKS[i].phase; } return "Complete!"; }, [completed]);
+  const nextTask = useMemo(() => TASKS.find(t => !completed[t.d]), [completed]);
+  const motivation = useMemo(() => MOTIVATIONS[Math.floor(Math.random() * MOTIVATIONS.length)], [tab]);
+  const earnedAchievements = useMemo(() => ACHIEVEMENTS.filter(a => a.check(completed)), [completed]);
+
+  const filteredTasks = useMemo(() => {
+    let tasks = TASKS;
+    if (filterPhase !== "All") tasks = tasks.filter(t => t.phase === filterPhase);
+    if (filterLevel !== "All") tasks = tasks.filter(t => t.lvl === filterLevel);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      tasks = tasks.filter(t => t.task.toLowerCase().includes(q) || t.phase.toLowerCase().includes(q) || t.cat.toLowerCase().includes(q));
+    }
+    return tasks;
+  }, [filterPhase, filterLevel, searchQuery]);
+
+  // Heatmap data (10 rows x 10 cols)
+  const heatmapData = useMemo(() => {
+    return Array.from({length:100}, (_, i) => ({
+      day: i + 1,
+      done: !!completed[i + 1],
+      row: Math.floor(i / 10),
+      col: i % 10
+    }));
+  }, [completed]);
+
+  const handleRegister = () => { if (!nameInput.trim()) return; setWelcomeFade(true); setTimeout(() => setUser(nameInput.trim()), 600); };
+  const getGreeting = () => { const h = new Date().getHours(); if (h < 12) return "Good Morning"; if (h < 17) return "Good Afternoon"; return "Good Evening"; };
+  const formatTime = (s) => `${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}`;
+  const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
+
+  const saveNote = (day) => {
+    if (noteInput.trim()) {
+      setNotes(prev => ({...prev, [day]: noteInput.trim()}));
+    } else {
+      setNotes(prev => { const n = {...prev}; delete n[day]; return n; });
+    }
+    setShowNoteFor(null);
+    setNoteInput("");
+  };
+
+  // Loading screen
+  if (!loaded) return (
+    <div style={{display:"flex",justifyContent:"center",alignItems:"center",height:"100vh",background:"#0a0e1a"}}>
+      <div className="float-anim" style={{textAlign:"center"}}>
+        <div style={{width:56,height:56,border:"3px solid rgba(99,102,241,.2)",borderTopColor:"#6366f1",borderRadius:"50%",animation:"spin .8s linear infinite",margin:"0 auto 20px"}}/>
+        <p style={{color:"#64748b",fontSize:13,fontWeight:500}}>Loading your journey...</p>
+      </div>
+    </div>
+  );
+
+  // Welcome/Register screen
+  if (!user) return (
+    <div className="welcome-bg" style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",padding:20,opacity:welcomeFade?.2:1,transition:"opacity .6s ease"}}>
+      <div style={{position:"fixed",inset:0,overflow:"hidden",pointerEvents:"none"}}>
+        {Array.from({length:30}).map((_,i) => (
+          <div key={i} style={{position:"absolute",width:Math.random()*3+1,height:Math.random()*3+1,borderRadius:"50%",background:`rgba(${Math.random()>.5?'99,102,241':'139,92,246'},${Math.random()*.4+.1})`,left:`${Math.random()*100}%`,top:`${Math.random()*100}%`,animation:`float ${Math.random()*4+3}s ease-in-out infinite`,animationDelay:`${Math.random()*3}s`}}/>
+        ))}
+      </div>
+      <div className="scale-in" style={{maxWidth:480,width:"100%",textAlign:"center",position:"relative",zIndex:1}}>
+        <div style={{marginBottom:28}}>
+          <div style={{width:80,height:80,borderRadius:20,margin:"0 auto 20px",display:"flex",alignItems:"center",justifyContent:"center",background:"linear-gradient(135deg,rgba(99,102,241,.15),rgba(139,92,246,.15))",backdropFilter:"blur(20px)",border:"1px solid rgba(255,255,255,.1)",fontSize:36,animation:"glow 3s ease infinite"}}>
+            <span className="float-anim">🚀</span>
+          </div>
+          <h1 className="shimmer-text" style={{fontSize:clamp(32,5,48),fontWeight:900,fontFamily:"'JetBrains Mono'",letterSpacing:"-2px",lineHeight:1.1}}>100 DAYS</h1>
+          <p style={{color:"#94a3b8",fontSize:14,marginTop:8,fontWeight:400,letterSpacing:"3px",textTransform:"uppercase"}}>Digital Marketing Mastery</p>
+        </div>
+        <div className="fade-up" style={{display:"flex",gap:6,justifyContent:"center",flexWrap:"wrap",marginBottom:28,animationDelay:".15s"}}>
+          {["SEO","PPC","Social Ads","Content","Email","Analytics","CRO","Strategy"].map(f => (
+            <span key={f} style={{padding:"5px 12px",borderRadius:20,fontSize:10,fontWeight:600,letterSpacing:".5px",background:"rgba(255,255,255,.06)",border:"1px solid rgba(255,255,255,.06)",color:"#94a3b8"}}>{f}</span>
+          ))}
+        </div>
+        <div className="fade-up" style={{background:"rgba(255,255,255,.03)",backdropFilter:"blur(30px)",borderRadius:20,padding:"32px 28px",border:"1px solid rgba(255,255,255,.06)",animationDelay:".2s"}}>
+          <p style={{color:"#e2e8f0",fontSize:17,fontWeight:700,marginBottom:4}}>What should we call you?</p>
+          <p style={{color:"#64748b",fontSize:12,marginBottom:20}}>Your name will appear on your personal dashboard</p>
+          <input className="input-glow" value={nameInput} onChange={e => setNameInput(e.target.value)} onKeyDown={e => e.key==="Enter" && handleRegister()} placeholder="Enter your name..." style={{width:"100%",padding:"14px 18px",borderRadius:12,border:"2px solid rgba(255,255,255,.08)",background:"rgba(0,0,0,.3)",color:"#fff",fontSize:15,fontFamily:"'Inter'",fontWeight:500,outline:"none",transition:"all .3s ease"}}/>
+          <button className="start-btn" onClick={handleRegister} style={{width:"100%",padding:"14px",borderRadius:12,border:"none",color:"#fff",fontSize:15,fontWeight:700,fontFamily:"'Inter'",cursor:"pointer",marginTop:12,letterSpacing:".3px"}}>
+            Begin My Journey →
+          </button>
+        </div>
+        <p className="fade-up" style={{color:"#475569",fontSize:11,marginTop:20,animationDelay:".4s"}}>13 phases  ·  100 tasks  ·  8 categories  ·  {ACHIEVEMENTS.length} achievements</p>
+      </div>
+    </div>
+  );
+
+  const ProgressRing = ({pct:p, size=100, stroke=8, color="var(--accent)"}) => {
+    const r=(size-stroke)/2; const c=2*Math.PI*r; const off=c-(p/100)*c;
+    return (
+      <svg width={size} height={size} style={{transform:"rotate(-90deg)"}}>
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="var(--border)" strokeWidth={stroke}/>
+        <circle className="progress-ring" cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeDasharray={c} strokeDashoffset={off} strokeLinecap="round" style={{transition:"stroke-dashoffset 1s ease"}}/>
+      </svg>
+    );
+  };
+
+  const CCard = ({t, s, children, f}) => (
+    <div className="fade-up chart-card" style={{background:"var(--bg-secondary)",borderRadius:16,padding:"20px 14px",border:"1px solid var(--border)",boxShadow:"var(--card-shadow)",gridColumn:f?"1 / -1":"auto"}}>
+      <h3 style={{margin:"0 0 2px 6px",fontSize:14,fontWeight:800,color:"var(--text-primary)"}}>{t}</h3>
+      {s && <p style={{margin:"0 0 10px 6px",fontSize:11,color:"var(--text-tertiary)",fontWeight:500}}>{s}</p>}
+      {children}
+    </div>
+  );
+
+  const tabs = [
+    {id:"dashboard",l:"Dashboard",i:"📊"},
+    {id:"checklist",l:"Checklist",i:"📋"},
+    {id:"phases",l:"Phases",i:"🗂"},
+    {id:"heatmap",l:"Heatmap",i:"🟩"},
+    {id:"achievements",l:"Trophies",i:"🏆"},
+    {id:"analytics",l:"Analytics",i:"📈"},
+    {id:"timer",l:"Focus",i:"⏱"},
+  ];
+
+  return (
+    <div className="theme-transition" style={{fontFamily:"'Inter',sans-serif",background:"var(--bg-primary)",minHeight:"100vh",color:"var(--text-primary)"}}>
+
+      {/* Confetti */}
+      {showConfetti && (
+        <div style={{position:"fixed",inset:0,pointerEvents:"none",zIndex:9999}}>
+          {Array.from({length:40}).map((_,i) => (
+            <div key={i} style={{position:"absolute",left:`${Math.random()*100}%`,top:`${35+Math.random()*40}%`,width:Math.random()*6+4,height:Math.random()*6+4,borderRadius:Math.random()>.5?"50%":"2px",background:["#6366f1","#22c55e","#f59e0b","#ef4444","#8b5cf6","#ec4899","#06b6d4"][i%7],animation:`confetti ${.6+Math.random()*.6}s ease forwards`,animationDelay:`${Math.random()*.3}s`}}/>
+          ))}
+        </div>
+      )}
+
+      {/* Achievement popup */}
+      {showAchievement && (
+        <div style={{position:"fixed",top:24,left:"50%",transform:"translateX(-50%)",zIndex:10000,animation:"fadeUp .4s ease"}}>
+          <div style={{background:"var(--bg-secondary)",border:"2px solid var(--accent)",borderRadius:16,padding:"14px 24px",display:"flex",alignItems:"center",gap:12,boxShadow:"0 20px 60px rgba(0,0,0,.3)"}}>
+            <span style={{fontSize:32,animation:"celebrate .6s ease"}}>{showAchievement.icon}</span>
+            <div>
+              <p style={{fontSize:11,fontWeight:700,color:"var(--accent)",textTransform:"uppercase",letterSpacing:"1px"}}>Achievement Unlocked!</p>
+              <p style={{fontSize:15,fontWeight:800,color:"var(--text-primary)"}}>{showAchievement.title}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* HEADER */}
+      <div style={{background:"var(--header-bg)",padding:"24px 20px 20px",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",inset:0,background:"radial-gradient(circle at 80% 20%, rgba(99,102,241,.08), transparent 50%)"}}/>
+        <div style={{maxWidth:1200,margin:"0 auto",position:"relative"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:14}} className="mobile-stack">
+            <div className="fade-up">
+              <p style={{color:"#64748b",fontSize:11,fontWeight:600,letterSpacing:"2px",textTransform:"uppercase",marginBottom:2}}>{getGreeting()}</p>
+              <h1 style={{color:"#f1f5f9",fontSize:26,fontWeight:900,fontFamily:"'JetBrains Mono'",letterSpacing:"-1px",margin:0}}>
+                {user} <span style={{fontSize:18}}>👋</span>
+              </h1>
+              <p style={{color:"#64748b",fontSize:12,marginTop:4,fontStyle:"italic",maxWidth:360}}>"{motivation}"</p>
+              {/* XP & Level */}
+              <div style={{display:"flex",alignItems:"center",gap:10,marginTop:10}}>
+                <span style={{background:"linear-gradient(135deg,#6366f1,#8b5cf6)",color:"#fff",fontSize:10,fontWeight:800,padding:"3px 10px",borderRadius:6,letterSpacing:".5px"}}>{level.name}</span>
+                <div style={{display:"flex",alignItems:"center",gap:6}}>
+                  <div style={{width:100,height:5,background:"rgba(255,255,255,.1)",borderRadius:10,overflow:"hidden"}}>
+                    <div style={{width:`${level.progress}%`,height:"100%",background:"linear-gradient(90deg,#6366f1,#a78bfa)",borderRadius:10,transition:"width .8s ease"}}/>
+                  </div>
+                  <span style={{color:"#818cf8",fontSize:10,fontWeight:700,fontFamily:"'JetBrains Mono'"}}>{xp} XP</span>
+                </div>
+              </div>
+            </div>
+            <div className="fade-up" style={{display:"flex",alignItems:"center",gap:14,animationDelay:".1s"}}>
+              {/* Theme toggle */}
+              <button onClick={toggleTheme} className="action-btn" style={{width:36,height:36,borderRadius:10,background:"rgba(255,255,255,.06)",color:"#f1f5f9",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center",border:"1px solid rgba(255,255,255,.08)"}}>
+                {theme === "dark" ? "☀️" : "🌙"}
+              </button>
+              <div style={{position:"relative",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                <ProgressRing pct={pct} size={72} stroke={6} color="#818cf8"/>
+                <div style={{position:"absolute",textAlign:"center"}}>
+                  <div style={{color:"#f1f5f9",fontSize:18,fontWeight:900,fontFamily:"'JetBrains Mono'"}}>{pct}%</div>
+                </div>
+              </div>
+              {streak > 0 && (
+                <div className="streak-badge" style={{background:"rgba(245,158,11,.12)",border:"1px solid rgba(245,158,11,.25)",borderRadius:12,padding:"8px 14px",textAlign:"center"}}>
+                  <div style={{fontSize:20}}>🔥</div>
+                  <div style={{color:"#fbbf24",fontSize:16,fontWeight:900,fontFamily:"'JetBrains Mono'"}}>{streak}</div>
+                  <div style={{color:"#92400e",fontSize:8,fontWeight:700,textTransform:"uppercase",letterSpacing:"1px"}}>Streak</div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Stats row */}
+          <div className="fade-up" style={{display:"flex",gap:8,marginTop:16,flexWrap:"wrap",animationDelay:".12s"}}>
+            {[
+              {l:"Done",v:totalDone,i:"✅"},
+              {l:"Left",v:100-totalDone,i:"📋"},
+              {l:"Phases",v:`${phaseData.filter(p=>p.done===p.total&&p.total>0).length}/13`,i:"🎯"},
+              {l:"Badges",v:`${earnedAchievements.length}/${ACHIEVEMENTS.length}`,i:"🏆"},
+              {l:"Current",v:currentPhase,i:"📍",w:true}
+            ].map((s,i) => (
+              <div key={i} className="stat-card" style={{background:"rgba(255,255,255,.04)",borderRadius:10,padding:"8px 14px",border:"1px solid rgba(255,255,255,.06)",flex:s.w?"1 1 auto":"0 0 auto",minWidth:s.w?180:80}}>
+                <span style={{fontSize:12,marginRight:5}}>{s.i}</span>
+                <span style={{color:"#94a3b8",fontSize:9,fontWeight:700,textTransform:"uppercase",letterSpacing:"1px"}}>{s.l} </span>
+                <span style={{color:"#f1f5f9",fontSize:s.w?11:14,fontWeight:800,fontFamily:s.w?"'Inter'":"'JetBrains Mono'"}}>{s.v}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Progress bar */}
+          <div style={{marginTop:12,background:"rgba(255,255,255,.06)",borderRadius:20,height:6,overflow:"hidden"}}>
+            <div style={{height:"100%",width:`${pct}%`,background:"linear-gradient(90deg,#6366f1,#8b5cf6,#a78bfa)",borderRadius:20,transition:"width .8s cubic-bezier(.4,0,.2,1)"}}/>
+          </div>
+        </div>
+      </div>
+
+      {/* NAV TABS */}
+      <div style={{maxWidth:1200,margin:"0 auto",padding:"0 20px"}}>
+        <div style={{display:"flex",gap:2,padding:"10px 0",borderBottom:"2px solid var(--border)",overflowX:"auto",msOverflowStyle:"none",scrollbarWidth:"none"}}>
+          {tabs.map(t => (
+            <button key={t.id} className={`tab-btn ${tab===t.id?"active":""}`} onClick={() => setTab(t.id)} style={{padding:"9px 16px",border:"none",cursor:"pointer",fontWeight:700,fontSize:12,fontFamily:"'Inter'",borderRadius:"8px 8px 0 0",background:tab===t.id?"var(--bg-secondary)":"transparent",color:tab===t.id?"var(--text-primary)":"var(--text-tertiary)",boxShadow:tab===t.id?"var(--card-shadow)":"none",whiteSpace:"nowrap"}}>
+              {t.i} <span className="mobile-hide">{t.l}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* ===== DASHBOARD ===== */}
+        {tab === "dashboard" && (
+          <div style={{padding:"20px 0 50px"}}>
+            {/* Next task card */}
+            {nextTask && (
+              <div className="fade-up grid-card" onClick={() => toggle(nextTask.d)} style={{background:"var(--header-bg)",borderRadius:18,padding:"24px",marginBottom:20,border:"1px solid rgba(99,102,241,.2)",position:"relative",overflow:"hidden"}}>
+                <div style={{position:"absolute",top:0,right:0,width:180,height:180,background:"radial-gradient(circle,rgba(99,102,241,.1),transparent)",borderRadius:"50%"}}/>
+                <p style={{color:"#64748b",fontSize:10,fontWeight:700,letterSpacing:"2px",textTransform:"uppercase",marginBottom:6}}>⚡ Up Next — Day {nextTask.d}</p>
+                <h2 style={{color:"#f1f5f9",fontSize:18,fontWeight:800,marginBottom:8,lineHeight:1.3}}>{nextTask.task}</h2>
+                <div style={{display:"flex",gap:6,flexWrap:"wrap",alignItems:"center"}}>
+                  <span style={{padding:"3px 10px",borderRadius:6,fontSize:10,fontWeight:700,background:"rgba(99,102,241,.15)",color:"#818cf8"}}>{nextTask.phase}</span>
+                  <span style={{padding:"3px 10px",borderRadius:6,fontSize:10,fontWeight:700,background:"rgba(34,197,94,.15)",color:"#4ade80"}}>{nextTask.cat}</span>
+                  <span style={{padding:"3px 10px",borderRadius:6,fontSize:10,fontWeight:700,background:`${LC[nextTask.lvl]}22`,color:LC[nextTask.lvl]}}>{nextTask.lvl}</span>
+                  <span style={{padding:"3px 10px",borderRadius:6,fontSize:10,fontWeight:700,background:"rgba(139,92,246,.15)",color:"#a78bfa"}}>+{XP_PER_TASK[nextTask.lvl]} XP</span>
+                </div>
+                <p style={{color:"#475569",fontSize:11,marginTop:12}}>Click to complete →</p>
+              </div>
+            )}
+
+            {/* Quick heatmap */}
+            <div className="fade-up" style={{background:"var(--bg-secondary)",borderRadius:16,padding:"18px",border:"1px solid var(--border)",marginBottom:20,animationDelay:".05s"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+                <h3 style={{fontSize:14,fontWeight:800,color:"var(--text-primary)",margin:0}}>100-Day Journey Map</h3>
+                <span style={{fontSize:11,color:"var(--text-tertiary)",fontWeight:600}}>{totalDone}/100 completed</span>
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(20, 1fr)",gap:3}}>
+                {heatmapData.map(h => (
+                  <div key={h.day} className="tooltip" onClick={() => toggle(h.day)} style={{aspectRatio:"1",borderRadius:4,cursor:"pointer",background:h.done?"var(--accent)":"var(--bg-tertiary)",border:`1px solid ${h.done?"transparent":"var(--border)"}`,opacity:h.done?1:.6,transition:"all .2s ease",display:"flex",alignItems:"center",justifyContent:"center",fontSize:7,fontWeight:700,color:h.done?"#fff":"var(--text-tertiary)",fontFamily:"'JetBrains Mono'"}}>
+                    {h.day}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Phase overview */}
+            <h3 className="fade-up" style={{fontSize:16,fontWeight:800,color:"var(--text-primary)",marginBottom:14,animationDelay:".1s"}}>Phase Overview</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:10}} className="mobile-grid-1">
+              {phaseData.map((p,i) => { const pp = p.total ? Math.round(p.done/p.total*100) : 0; return (
+                <div key={i} className="fade-up grid-card" onClick={() => { setFilterPhase(p.name); setTab("checklist"); }} style={{background:"var(--bg-secondary)",borderRadius:14,padding:"16px 18px",border:"1px solid var(--border)",borderLeft:`4px solid ${PC[p.name]||"#94a3b8"}`,animationDelay:`${i*.03}s`,boxShadow:"var(--card-shadow)"}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                    <span style={{fontSize:12,fontWeight:700,color:"var(--text-primary)"}}>{p.name}</span>
+                    <span style={{fontSize:14,fontWeight:900,fontFamily:"'JetBrains Mono'",color:PC[p.name]}}>{pp}%</span>
+                  </div>
+                  <div style={{background:"var(--bg-tertiary)",borderRadius:10,height:5,overflow:"hidden"}}>
+                    <div style={{height:"100%",width:`${pp}%`,background:PC[p.name],borderRadius:10,transition:"width .8s ease"}}/>
+                  </div>
+                  <p style={{color:"var(--text-tertiary)",fontSize:10,marginTop:6,fontWeight:600}}>{p.done}/{p.total} tasks</p>
+                </div>
+              ); })}
+            </div>
+
+            {/* Charts */}
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:14,marginTop:20}} className="mobile-grid-1">
+              <CCard t="Skill Radar" s="Your competency across categories">
+                <ResponsiveContainer width="100%" height={260}>
+                  <RadarChart data={radarData}><PolarGrid stroke="var(--border)"/><PolarAngleAxis dataKey="subject" tick={{fontSize:9,fontWeight:600,fill:"var(--text-tertiary)"}}/><PolarRadiusAxis domain={[0,100]} tick={false} axisLine={false}/><Radar dataKey="pct" stroke="var(--accent)" fill="var(--accent)" fillOpacity={.15} strokeWidth={2}/></RadarChart>
+                </ResponsiveContainer>
+              </CCard>
+              <CCard t="Category Split" s="Task distribution by category">
+                <ResponsiveContainer width="100%" height={260}>
+                  <PieChart><Pie data={catData} dataKey="total" nameKey="name" cx="50%" cy="50%" outerRadius={90} innerRadius={50} paddingAngle={3} label={({name,percent})=>`${name} ${(percent*100).toFixed(0)}%`} style={{fontSize:9,fontWeight:600}}>{catData.map((e,i)=><Cell key={i} fill={CC[e.name]}/>)}</Pie><RTooltip/></PieChart>
+                </ResponsiveContainer>
+              </CCard>
+            </div>
+          </div>
+        )}
+
+        {/* ===== CHECKLIST ===== */}
+        {tab === "checklist" && (
+          <div style={{padding:"16px 0 50px"}}>
+            {/* Search & filters */}
+            <div style={{display:"flex",gap:10,marginBottom:14,flexWrap:"wrap",alignItems:"center"}} className="mobile-stack">
+              <div style={{flex:"1 1 200px",position:"relative"}}>
+                <span style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",fontSize:14,opacity:.5}}>🔍</span>
+                <input className="search-input" value={searchQuery} onChange={e=>setSearchQuery(e.target.value)} placeholder="Search tasks..." style={{width:"100%",padding:"10px 12px 10px 36px",borderRadius:10,border:"1.5px solid var(--border)",background:"var(--bg-secondary)",color:"var(--text-primary)",fontSize:13,fontFamily:"'Inter'",fontWeight:500,outline:"none"}}/>
+              </div>
+              <div style={{display:"flex",gap:4}}>
+                {["list","grid"].map(v => (
+                  <button key={v} onClick={() => setViewMode(v)} className="action-btn" style={{padding:"8px 14px",borderRadius:8,border:"1.5px solid",fontSize:14,borderColor:viewMode===v?"var(--accent)":"var(--border)",background:viewMode===v?"var(--accent-light)":"var(--bg-secondary)",color:viewMode===v?"var(--accent)":"var(--text-tertiary)"}}>{v==="list"?"☰":"▦"}</button>
+                ))}
+              </div>
+            </div>
+
+            {/* Level filter */}
+            <div style={{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}}>
+              {["All","Beginner","Intermediate","Advanced"].map(l => (
+                <button key={l} className="pill" onClick={() => setFilterLevel(l)} style={{padding:"5px 12px",borderRadius:8,border:"none",fontSize:10,fontWeight:700,background:filterLevel===l?"var(--text-primary)":"var(--bg-tertiary)",color:filterLevel===l?"var(--bg-primary)":"var(--text-secondary)"}}>
+                  {l === "All" ? "All Levels" : l}
+                </button>
+              ))}
+            </div>
+
+            {/* Phase filter */}
+            <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:14}}>
+              {["All",...PO].map(p => (
+                <button key={p} className="pill" onClick={() => setFilterPhase(p)} style={{padding:"5px 12px",borderRadius:8,border:"none",fontSize:10,fontWeight:600,background:filterPhase===p?"var(--text-primary)":"var(--bg-tertiary)",color:filterPhase===p?"var(--bg-primary)":"var(--text-secondary)"}}>
+                  {p==="All"?`All (${totalDone}/100)`:p}
+                </button>
+              ))}
+            </div>
+
+            {filteredTasks.length === 0 && (
+              <div style={{textAlign:"center",padding:"40px 20px",color:"var(--text-tertiary)"}}>
+                <div style={{fontSize:40,marginBottom:10}}>🔍</div>
+                <p style={{fontWeight:700}}>No tasks found</p>
+                <p style={{fontSize:12,marginTop:4}}>Try adjusting your search or filters</p>
+              </div>
+            )}
+
+            {/* List view */}
+            {viewMode === "list" && (
+              <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                {filteredTasks.map((t,i) => { const done=!!completed[t.d]; return (
+                  <div key={t.d} className="task-row fade-up" style={{borderRadius:12,background:done?`${LC["Beginner"]}08`:"var(--bg-secondary)",border:`1.5px solid ${done?"var(--success)":"var(--border)"}`,animationDelay:`${Math.min(i*.015,.4)}s`,transform:justCompleted===t.d?"scale(1.01)":"none",overflow:"hidden"}}>
+                    <div onClick={() => toggle(t.d)} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",cursor:"pointer"}}>
+                      <div style={{width:28,height:28,borderRadius:8,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:800,transition:"all .3s cubic-bezier(.4,0,.2,1)",background:done?"var(--success)":"var(--bg-secondary)",border:done?"2px solid var(--success)":"2px solid var(--border)",color:done?"#fff":"transparent",transform:done?"rotate(0) scale(1)":"rotate(-90deg) scale(.8)"}}>✓</div>
+                      <div style={{background:PC[t.phase]||"#64748b",color:"#fff",fontWeight:800,fontSize:10,borderRadius:6,padding:"3px 8px",minWidth:42,textAlign:"center",fontFamily:"'JetBrains Mono'",flexShrink:0}}>D{t.d}</div>
+                      <div style={{flex:1,minWidth:0}}>
+                        <div style={{fontSize:13,fontWeight:600,color:done?"var(--success)":"var(--text-primary)",textDecoration:done?"line-through":"none",lineHeight:1.3}}>{t.task}</div>
+                        <div style={{display:"flex",gap:4,marginTop:4,flexWrap:"wrap",alignItems:"center"}}>
+                          <span style={{fontSize:9,fontWeight:700,color:"var(--text-tertiary)",background:"var(--bg-tertiary)",padding:"2px 6px",borderRadius:4}}>{t.phase}</span>
+                          <span style={{fontSize:9,fontWeight:700,color:CC[t.cat],background:`${CC[t.cat]}15`,padding:"2px 6px",borderRadius:4}}>{t.cat}</span>
+                          <span style={{fontSize:9,fontWeight:700,color:LC[t.lvl],background:`${LC[t.lvl]}15`,padding:"2px 6px",borderRadius:4}}>{t.lvl}</span>
+                          <span style={{fontSize:9,fontWeight:700,color:"var(--accent)",background:"var(--accent-light)",padding:"2px 6px",borderRadius:4}}>+{XP_PER_TASK[t.lvl]}XP</span>
+                          {notes[t.d] && <span style={{fontSize:9,fontWeight:700,color:"var(--warning)",background:`${LC["Intermediate"]}15`,padding:"2px 6px",borderRadius:4}}>📝 Note</span>}
+                        </div>
+                      </div>
+                      <button onClick={e => { e.stopPropagation(); setShowNoteFor(showNoteFor===t.d?null:t.d); setNoteInput(notes[t.d]||""); }} className="action-btn" style={{width:28,height:28,borderRadius:6,background:"var(--bg-tertiary)",color:"var(--text-tertiary)",fontSize:12,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>📝</button>
+                    </div>
+                    {/* Note expand */}
+                    {showNoteFor === t.d && (
+                      <div style={{padding:"0 16px 12px",animation:"slideDown .2s ease"}}>
+                        <textarea value={noteInput} onChange={e=>setNoteInput(e.target.value)} placeholder="Add a note for this task..." rows={2} style={{width:"100%",padding:"10px",borderRadius:8,border:"1.5px solid var(--border)",background:"var(--bg-tertiary)",color:"var(--text-primary)",fontSize:12,fontFamily:"'Inter'",resize:"vertical",outline:"none"}}/>
+                        <div style={{display:"flex",gap:6,marginTop:6}}>
+                          <button onClick={() => saveNote(t.d)} className="action-btn" style={{padding:"6px 14px",borderRadius:6,background:"var(--accent)",color:"#fff",fontSize:11,fontWeight:700}}>Save</button>
+                          <button onClick={() => setShowNoteFor(null)} className="action-btn" style={{padding:"6px 14px",borderRadius:6,background:"var(--bg-tertiary)",color:"var(--text-secondary)",fontSize:11,fontWeight:700}}>Cancel</button>
+                        </div>
+                        {notes[t.d] && <p style={{fontSize:11,color:"var(--text-secondary)",marginTop:6,padding:"8px",background:"var(--bg-tertiary)",borderRadius:6,lineHeight:1.4}}>{notes[t.d]}</p>}
+                      </div>
+                    )}
+                  </div>
+                ); })}
+              </div>
+            )}
+
+            {/* Grid view */}
+            {viewMode === "grid" && (
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(150px,1fr))",gap:8}}>
+                {filteredTasks.map((t,i) => { const done=!!completed[t.d]; return (
+                  <div key={t.d} className="fade-up grid-card" onClick={() => toggle(t.d)} style={{background:done?"var(--success-light)":"var(--bg-secondary)",borderRadius:14,padding:"14px",border:`1.5px solid ${done?"var(--success)":"var(--border)"}`,textAlign:"center",animationDelay:`${Math.min(i*.012,.3)}s`,position:"relative",overflow:"hidden"}}>
+                    {done && <div style={{position:"absolute",top:6,right:6,width:20,height:20,borderRadius:"50%",background:"var(--success)",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:10,fontWeight:800}}>✓</div>}
+                    <div style={{width:40,height:40,borderRadius:10,margin:"0 auto 8px",display:"flex",alignItems:"center",justifyContent:"center",background:`${PC[t.phase]}18`,color:PC[t.phase],fontWeight:900,fontSize:14,fontFamily:"'JetBrains Mono'"}}>{t.d}</div>
+                    <p style={{fontSize:10,fontWeight:600,color:done?"var(--success)":"var(--text-primary)",lineHeight:1.3,textDecoration:done?"line-through":"none"}}>{t.task}</p>
+                    <div style={{marginTop:6,display:"flex",gap:3,justifyContent:"center",flexWrap:"wrap"}}>
+                      <span style={{fontSize:8,fontWeight:700,color:CC[t.cat],background:`${CC[t.cat]}12`,padding:"2px 5px",borderRadius:3}}>{t.cat}</span>
+                      <span style={{fontSize:8,fontWeight:700,color:LC[t.lvl],background:`${LC[t.lvl]}12`,padding:"2px 5px",borderRadius:3}}>{t.lvl}</span>
+                    </div>
+                  </div>
+                ); })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ===== PHASES ===== */}
+        {tab === "phases" && (
+          <div style={{padding:"20px 0 50px"}}>
+            {PO.map((phase,pi) => { const tasks=TASKS.filter(t=>t.phase===phase); const done=tasks.filter(t=>completed[t.d]).length; const pp=Math.round(done/tasks.length*100); return (
+              <div key={phase} className="fade-up" style={{marginBottom:12,animationDelay:`${pi*.04}s`}}>
+                <div className="phase-row" style={{background:"var(--bg-secondary)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)",borderLeft:`4px solid ${PC[phase]}`,cursor:"pointer",boxShadow:"var(--card-shadow)"}} onClick={() => { setFilterPhase(phase); setTab("checklist"); }}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+                    <div>
+                      <h3 style={{fontSize:15,fontWeight:800,color:"var(--text-primary)",margin:0}}>{phase}</h3>
+                      <p style={{color:"var(--text-tertiary)",fontSize:11,marginTop:2}}>{tasks.length} tasks  ·  {done} completed</p>
+                    </div>
+                    <div style={{textAlign:"right"}}>
+                      <div style={{fontSize:22,fontWeight:900,fontFamily:"'JetBrains Mono'",color:PC[phase]}}>{pp}%</div>
+                      <div style={{fontSize:9,color:pp===100?"var(--success)":"var(--text-tertiary)",fontWeight:700}}>{pp===100?"COMPLETE ✓":"IN PROGRESS"}</div>
+                    </div>
+                  </div>
+                  <div style={{background:"var(--bg-tertiary)",borderRadius:10,height:6,overflow:"hidden"}}>
+                    <div style={{height:"100%",width:`${pp}%`,background:`linear-gradient(90deg,${PC[phase]},${PC[phase]}aa)`,borderRadius:10,transition:"width 1s ease"}}/>
+                  </div>
+                  <div style={{display:"flex",gap:3,marginTop:10,flexWrap:"wrap"}}>
+                    {tasks.map(t => (
+                      <div key={t.d} style={{width:20,height:20,borderRadius:5,display:"flex",alignItems:"center",justifyContent:"center",fontSize:7,fontWeight:800,fontFamily:"'JetBrains Mono'",cursor:"pointer",transition:"all .15s",background:completed[t.d]?PC[phase]:"var(--bg-tertiary)",color:completed[t.d]?"#fff":"var(--text-tertiary)",border:completed[t.d]?"none":"1px solid var(--border)"}} onClick={e => { e.stopPropagation(); toggle(t.d); }}>
+                        {t.d}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ); })}
+          </div>
+        )}
+
+        {/* ===== HEATMAP ===== */}
+        {tab === "heatmap" && (
+          <div style={{padding:"20px 0 50px"}}>
+            <div className="fade-up" style={{background:"var(--bg-secondary)",borderRadius:16,padding:"24px",border:"1px solid var(--border)",boxShadow:"var(--card-shadow)",marginBottom:20}}>
+              <h3 style={{fontSize:16,fontWeight:800,color:"var(--text-primary)",marginBottom:4}}>Completion Heatmap</h3>
+              <p style={{color:"var(--text-tertiary)",fontSize:12,marginBottom:16}}>Click any cell to toggle task completion</p>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(10, 1fr)",gap:4}}>
+                {heatmapData.map(h => {
+                  const task = TASKS[h.day - 1];
+                  return (
+                    <div key={h.day} onClick={() => toggle(h.day)} style={{aspectRatio:"1",borderRadius:6,cursor:"pointer",background:h.done?PC[task.phase]:"var(--bg-tertiary)",border:`1.5px solid ${h.done?"transparent":"var(--border)"}`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",transition:"all .2s ease",opacity:h.done?1:.7,position:"relative"}} className="grid-card">
+                      <span style={{fontSize:11,fontWeight:800,fontFamily:"'JetBrains Mono'",color:h.done?"#fff":"var(--text-tertiary)"}}>{h.day}</span>
+                      <span style={{fontSize:6,fontWeight:600,color:h.done?"rgba(255,255,255,.7)":"var(--text-tertiary)",marginTop:1,maxWidth:"90%",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap",textAlign:"center"}}>{task.cat}</span>
+                      {h.done && <div style={{position:"absolute",top:3,right:3,width:8,height:8,borderRadius:"50%",background:"rgba(255,255,255,.4)"}}/>}
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{display:"flex",gap:12,marginTop:16,flexWrap:"wrap",justifyContent:"center"}}>
+                {Object.entries(PC).map(([name, color]) => (
+                  <div key={name} style={{display:"flex",alignItems:"center",gap:4}}>
+                    <div style={{width:10,height:10,borderRadius:3,background:color}}/>
+                    <span style={{fontSize:9,fontWeight:600,color:"var(--text-tertiary)"}}>{name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Streak info */}
+            <div className="fade-up" style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12,animationDelay:".1s"}}>
+              <div style={{background:"var(--bg-secondary)",borderRadius:14,padding:"20px",border:"1px solid var(--border)",textAlign:"center"}}>
+                <div style={{fontSize:36,marginBottom:6}}>🔥</div>
+                <div style={{fontSize:28,fontWeight:900,fontFamily:"'JetBrains Mono'",color:"var(--warning)"}}>{streak}</div>
+                <div style={{fontSize:11,color:"var(--text-tertiary)",fontWeight:600}}>Current Streak</div>
+              </div>
+              <div style={{background:"var(--bg-secondary)",borderRadius:14,padding:"20px",border:"1px solid var(--border)",textAlign:"center"}}>
+                <div style={{fontSize:36,marginBottom:6}}>⚡</div>
+                <div style={{fontSize:28,fontWeight:900,fontFamily:"'JetBrains Mono'",color:"var(--accent)"}}>{xp}</div>
+                <div style={{fontSize:11,color:"var(--text-tertiary)",fontWeight:600}}>Total XP Earned</div>
+              </div>
+              <div style={{background:"var(--bg-secondary)",borderRadius:14,padding:"20px",border:"1px solid var(--border)",textAlign:"center"}}>
+                <div style={{fontSize:36,marginBottom:6}}>📊</div>
+                <div style={{fontSize:28,fontWeight:900,fontFamily:"'JetBrains Mono'",color:"var(--success)"}}>{pct}%</div>
+                <div style={{fontSize:11,color:"var(--text-tertiary)",fontWeight:600}}>Overall Progress</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ===== ACHIEVEMENTS ===== */}
+        {tab === "achievements" && (
+          <div style={{padding:"20px 0 50px"}}>
+            <div style={{textAlign:"center",marginBottom:24}} className="fade-up">
+              <div style={{fontSize:48,marginBottom:8}}>🏆</div>
+              <h2 style={{fontSize:22,fontWeight:900,color:"var(--text-primary)"}}>Achievements</h2>
+              <p style={{color:"var(--text-tertiary)",fontSize:13}}>{earnedAchievements.length} of {ACHIEVEMENTS.length} unlocked</p>
+              <div style={{width:200,height:6,background:"var(--bg-tertiary)",borderRadius:10,margin:"10px auto",overflow:"hidden"}}>
+                <div style={{width:`${(earnedAchievements.length/ACHIEVEMENTS.length)*100}%`,height:"100%",background:"linear-gradient(90deg,#f59e0b,#ef4444)",borderRadius:10,transition:"width .8s ease"}}/>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:12}} className="mobile-grid-1">
+              {ACHIEVEMENTS.map((a, i) => {
+                const earned = a.check(completed);
+                return (
+                  <div key={a.id} className="fade-up" style={{background:earned?"var(--bg-secondary)":"var(--bg-secondary)",borderRadius:16,padding:"20px",border:`1.5px solid ${earned?"var(--warning)":"var(--border)"}`,opacity:earned?1:.5,boxShadow:earned?"0 4px 20px rgba(245,158,11,.15)":"none",animationDelay:`${i*.04}s`,transition:"all .3s ease"}}>
+                    <div style={{display:"flex",alignItems:"center",gap:12}}>
+                      <div style={{width:48,height:48,borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,background:earned?"rgba(245,158,11,.12)":"var(--bg-tertiary)",border:earned?"1px solid rgba(245,158,11,.2)":"1px solid var(--border)"}}>
+                        {earned ? a.icon : "🔒"}
+                      </div>
+                      <div>
+                        <h4 style={{fontSize:14,fontWeight:800,color:earned?"var(--text-primary)":"var(--text-tertiary)",margin:0}}>{a.title}</h4>
+                        <p style={{fontSize:11,color:"var(--text-tertiary)",marginTop:2}}>{a.desc}</p>
+                      </div>
+                    </div>
+                    {earned && <div style={{marginTop:10,fontSize:10,fontWeight:700,color:"var(--warning)",textTransform:"uppercase",letterSpacing:"1px"}}>✓ Unlocked</div>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ===== ANALYTICS ===== */}
+        {tab === "analytics" && (
+          <div style={{padding:"20px 0 50px"}}>
+            {totalDone === 0 && (
+              <div className="scale-in" style={{textAlign:"center",padding:"40px 20px",background:"var(--accent-light)",borderRadius:18,border:"1.5px solid var(--accent)",marginBottom:20}}>
+                <div style={{fontSize:40}} className="float-anim">👆</div>
+                <p style={{color:"var(--text-primary)",fontWeight:800,fontSize:16,margin:"12px 0 4px"}}>Start checking off tasks!</p>
+                <p style={{color:"var(--text-secondary)",fontSize:12}}>Head to the Checklist tab and complete tasks to see analytics.</p>
+              </div>
+            )}
+            <div style={{display:"flex",gap:5,marginBottom:16,flexWrap:"wrap"}}>
+              {[{id:"all",l:"All Charts"},{id:"progress",l:"Progress"},{id:"category",l:"Categories"},{id:"difficulty",l:"Difficulty"}].map(f => (
+                <button key={f.id} className="pill" onClick={() => setChartFilter(f.id)} style={{padding:"7px 14px",borderRadius:8,border:chartFilter===f.id?"none":"1.5px solid var(--border)",fontSize:11,fontWeight:700,background:chartFilter===f.id?"var(--text-primary)":"var(--bg-secondary)",color:chartFilter===f.id?"var(--bg-primary)":"var(--text-secondary)"}}>
+                  {f.l}
+                </button>
+              ))}
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:14}} className="mobile-grid-1">
+              {(chartFilter==="all"||chartFilter==="category") && <>
+                <CCard t="Tasks by Category" s="Distribution of all 100 tasks">
+                  <ResponsiveContainer width="100%" height={260}><PieChart><Pie data={catData} dataKey="total" nameKey="name" cx="50%" cy="50%" outerRadius={90} innerRadius={45} paddingAngle={3} label={({name,percent})=>`${name} ${(percent*100).toFixed(0)}%`} style={{fontSize:9,fontWeight:600}}>{catData.map((e,i)=><Cell key={i} fill={CC[e.name]}/>)}</Pie><RTooltip/></PieChart></ResponsiveContainer>
+                </CCard>
+                <CCard t="Completion by Category" s="Done tasks per category">
+                  <ResponsiveContainer width="100%" height={260}><PieChart><Pie data={catData.filter(c=>c.done>0)} dataKey="done" nameKey="name" cx="50%" cy="50%" outerRadius={90} innerRadius={45} paddingAngle={3} label={({name,value})=>`${name}: ${value}`} style={{fontSize:9,fontWeight:600}}>{catData.filter(c=>c.done>0).map((e,i)=><Cell key={i} fill={CC[e.name]}/>)}</Pie><RTooltip/></PieChart></ResponsiveContainer>
+                </CCard>
+                <CCard t="Category Completion %" s="Horizontal percentage bars" f>
+                  <ResponsiveContainer width="100%" height={260}><BarChart data={catData.map(c=>({...c,pct:c.total?Math.round(c.done/c.total*100):0}))} layout="vertical" margin={{left:60}}><XAxis type="number" domain={[0,100]} tick={{fontSize:10,fill:"var(--text-tertiary)"}} unit="%"/><YAxis dataKey="name" type="category" tick={{fontSize:10,fontWeight:600,fill:"var(--text-secondary)"}}/><RTooltip formatter={v=>`${v}%`}/><Bar dataKey="pct" name="% Complete" radius={[0,6,6,0]}>{catData.map((e,i)=><Cell key={i} fill={CC[e.name]}/>)}</Bar></BarChart></ResponsiveContainer>
+                </CCard>
+              </>}
+              {(chartFilter==="all"||chartFilter==="progress") && <>
+                <CCard t="Phase Progress" s="Total vs Completed per phase" f>
+                  <ResponsiveContainer width="100%" height={300}><BarChart data={phaseData} margin={{left:0,right:10,bottom:60}}><XAxis dataKey="name" tick={{fontSize:8,fontWeight:600,fill:"var(--text-tertiary)"}} angle={-40} textAnchor="end" interval={0}/><YAxis tick={{fontSize:10,fill:"var(--text-tertiary)"}}/><RTooltip/><Legend wrapperStyle={{fontSize:11}}/><Bar dataKey="total" name="Total" fill="var(--border)" radius={[4,4,0,0]}/><Bar dataKey="done" name="Done" fill="var(--accent)" radius={[4,4,0,0]}/></BarChart></ResponsiveContainer>
+                </CCard>
+                <CCard t="Cumulative Progress vs Target" s="Track if you're on pace — 1 task/day" f>
+                  <ResponsiveContainer width="100%" height={280}><AreaChart data={cumulativeData} margin={{left:0,right:10}}><XAxis dataKey="day" tick={{fontSize:9,fill:"var(--text-tertiary)"}}/><YAxis tick={{fontSize:10,fill:"var(--text-tertiary)"}}/><RTooltip/><Legend wrapperStyle={{fontSize:11}}/><Area type="monotone" dataKey="target" name="Target" stroke="#22c55e" fill="rgba(34,197,94,.08)" strokeWidth={2} strokeDasharray="6 3" dot={false}/><Area type="monotone" dataKey="done" name="Your Progress" stroke="var(--accent)" fill="var(--accent-light)" strokeWidth={2.5} dot={false}/></AreaChart></ResponsiveContainer>
+                </CCard>
+                <CCard t="Phase Completion Journey" s="% complete across each phase" f>
+                  <ResponsiveContainer width="100%" height={280}><LineChart data={phaseData.map(p=>({...p,pct:p.total?Math.round(p.done/p.total*100):0}))} margin={{left:0,right:10,bottom:60}}><XAxis dataKey="name" tick={{fontSize:8,fontWeight:600,fill:"var(--text-tertiary)"}} angle={-40} textAnchor="end" interval={0}/><YAxis domain={[0,100]} tick={{fontSize:10,fill:"var(--text-tertiary)"}} unit="%"/><RTooltip formatter={v=>`${v}%`}/><Line type="monotone" dataKey="pct" name="% Complete" stroke="var(--warning)" strokeWidth={2.5} dot={{fill:"var(--warning)",r:4}}/></LineChart></ResponsiveContainer>
+                </CCard>
+              </>}
+              {(chartFilter==="all"||chartFilter==="difficulty") && <>
+                <CCard t="Difficulty Breakdown" s="Total vs Completed per level">
+                  <ResponsiveContainer width="100%" height={260}><BarChart data={lvlData}><XAxis dataKey="name" tick={{fontSize:11,fontWeight:600,fill:"var(--text-secondary)"}}/><YAxis tick={{fontSize:10,fill:"var(--text-tertiary)"}}/><RTooltip/><Legend wrapperStyle={{fontSize:11}}/><Bar dataKey="total" name="Total" fill="var(--border)" radius={[4,4,0,0]}/><Bar dataKey="done" name="Done" fill="#8b5cf6" radius={[4,4,0,0]}/></BarChart></ResponsiveContainer>
+                </CCard>
+                <CCard t="Skill Radar Map" s="Your competency across categories">
+                  <ResponsiveContainer width="100%" height={260}><RadarChart data={radarData}><PolarGrid stroke="var(--border)"/><PolarAngleAxis dataKey="subject" tick={{fontSize:9,fontWeight:600,fill:"var(--text-tertiary)"}}/><PolarRadiusAxis domain={[0,100]} tick={false} axisLine={false}/><Radar dataKey="pct" stroke="var(--accent)" fill="var(--accent)" fillOpacity={.15} strokeWidth={2}/></RadarChart></ResponsiveContainer>
+                </CCard>
+              </>}
+            </div>
+            <div style={{display:"flex",gap:10,justifyContent:"center",marginTop:32}}>
+              <button onClick={() => { if(confirm("Reset all progress? This cannot be undone.")) { setCompleted({}); setNotes({}); } }} className="action-btn" style={{padding:"10px 20px",background:"rgba(239,68,68,.08)",color:"var(--danger)",border:"1.5px solid rgba(239,68,68,.2)",borderRadius:10,fontWeight:700,fontSize:11}}>Reset Progress</button>
+              <button onClick={() => { if(confirm("Log out? Progress is saved.")) setUser(null); }} className="action-btn" style={{padding:"10px 20px",background:"var(--bg-tertiary)",color:"var(--text-secondary)",border:"1.5px solid var(--border)",borderRadius:10,fontWeight:700,fontSize:11}}>Change Name</button>
+            </div>
+          </div>
+        )}
+
+        {/* ===== FOCUS TIMER ===== */}
+        {tab === "timer" && (
+          <div style={{padding:"20px 0 50px"}}>
+            <div className="fade-up" style={{background:"var(--bg-secondary)",borderRadius:18,padding:"32px",border:"1px solid var(--border)",textAlign:"center",maxWidth:420,margin:"0 auto",boxShadow:"var(--card-shadow)"}}>
+              <h3 style={{fontSize:18,fontWeight:800,color:"var(--text-primary)",marginBottom:4}}>Focus Timer</h3>
+              <p style={{color:"var(--text-tertiary)",fontSize:12,marginBottom:20}}>Stay focused on your current task</p>
+
+              {pomodoroTask && (
+                <div style={{background:"var(--accent-light)",borderRadius:10,padding:"10px 16px",marginBottom:20,border:"1px solid var(--accent)"}}>
+                  <p style={{fontSize:11,fontWeight:700,color:"var(--accent)"}}>Focusing on: Day {pomodoroTask.d}</p>
+                  <p style={{fontSize:12,fontWeight:600,color:"var(--text-primary)",marginTop:2}}>{pomodoroTask.task}</p>
+                </div>
+              )}
+
+              <div style={{position:"relative",width:200,height:200,margin:"0 auto 24px"}}>
+                <svg width={200} height={200} style={{transform:"rotate(-90deg)"}}>
+                  <circle cx={100} cy={100} r={90} fill="none" stroke="var(--bg-tertiary)" strokeWidth={8}/>
+                  <circle cx={100} cy={100} r={90} fill="none" stroke={pomodoroActive?"var(--accent)":"var(--border)"} strokeWidth={8} strokeDasharray={2*Math.PI*90} strokeDashoffset={2*Math.PI*90*(1-pomodoroTime/(25*60))} strokeLinecap="round" className="timer-ring"/>
+                </svg>
+                <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                  <span style={{fontSize:40,fontWeight:900,fontFamily:"'JetBrains Mono'",color:"var(--text-primary)",letterSpacing:"-2px"}}>{formatTime(pomodoroTime)}</span>
+                </div>
+              </div>
+
+              <div style={{display:"flex",gap:8,justifyContent:"center",marginBottom:16}}>
+                {[15,25,45].map(m => (
+                  <button key={m} onClick={() => { setPomodoroTime(m*60); setPomodoroActive(false); }} className="action-btn pill" style={{padding:"6px 14px",borderRadius:8,fontSize:11,fontWeight:700,background:pomodoroTime===m*60&&!pomodoroActive?"var(--accent)":"var(--bg-tertiary)",color:pomodoroTime===m*60&&!pomodoroActive?"#fff":"var(--text-secondary)",border:"none"}}>{m}m</button>
+                ))}
+              </div>
+
+              <div style={{display:"flex",gap:8,justifyContent:"center"}}>
+                <button onClick={() => setPomodoroActive(!pomodoroActive)} className="action-btn" style={{padding:"12px 28px",borderRadius:10,background:pomodoroActive?"var(--danger)":"var(--accent)",color:"#fff",fontSize:13,fontWeight:700}}>
+                  {pomodoroActive ? "Pause" : pomodoroTime < 25*60 ? "Resume" : "Start"}
+                </button>
+                <button onClick={() => { setPomodoroTime(25*60); setPomodoroActive(false); }} className="action-btn" style={{padding:"12px 20px",borderRadius:10,background:"var(--bg-tertiary)",color:"var(--text-secondary)",fontSize:13,fontWeight:700,border:"1px solid var(--border)"}}>Reset</button>
+              </div>
+
+              {pomodoroTime === 0 && (
+                <div className="bounce-in" style={{marginTop:20,padding:"14px",background:"var(--success-light)",borderRadius:10,border:"1px solid var(--success)"}}>
+                  <p style={{fontSize:24}}>🎉</p>
+                  <p style={{fontSize:14,fontWeight:800,color:"var(--success)"}}>Time's up! Great focus session!</p>
+                </div>
+              )}
+            </div>
+
+            {/* Quick task selector for timer */}
+            {nextTask && !pomodoroTask && (
+              <div className="fade-up" style={{maxWidth:420,margin:"16px auto 0",animationDelay:".1s"}}>
+                <button onClick={() => setPomodoroTask(nextTask)} className="action-btn" style={{width:"100%",padding:"14px",borderRadius:12,background:"var(--accent-light)",border:"1.5px solid var(--accent)",color:"var(--accent)",fontSize:13,fontWeight:700}}>
+                  🎯 Focus on: Day {nextTask.d} — {nextTask.task}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div style={{textAlign:"center",padding:"20px",borderTop:"1px solid var(--border)",marginTop:20}}>
+        <p style={{color:"var(--text-tertiary)",fontSize:11,fontWeight:500}}>
+          Study Analytics — 100 Days Digital Marketing Mastery  ·  {totalDone}/100 completed  ·  {xp} XP earned
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function clamp(min, vw, max) {
+  return `clamp(${min}px, ${vw}vw, ${max}px)`;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
