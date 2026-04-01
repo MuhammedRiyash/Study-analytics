@@ -127,22 +127,11 @@ export default function WelcomeScreen({ onRegister }) {
     }
   }, [showBubble])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleBegin = () => {
     const trimmed = name.trim()
     if (!trimmed) return
-
-    // Simple fade out then proceed
-    if (containerRef.current) {
-      containerRef.current.style.transition = 'opacity 0.4s ease, transform 0.4s ease'
-      containerRef.current.style.opacity = '0'
-      containerRef.current.style.transform = 'scale(1.03)'
-    }
-
-    setTimeout(() => {
-      setUser(trimmed)
-      if (onRegister) onRegister(trimmed)
-    }, 450)
+    setUser(trimmed)
+    if (onRegister) onRegister(trimmed)
   }
 
   const titleText = '100 DAYS'
@@ -238,36 +227,35 @@ export default function WelcomeScreen({ onRegister }) {
       </div>
 
       {/* Glass card */}
-      <form ref={cardRef} onSubmit={handleSubmit}
+      <div ref={cardRef}
         className="w-[90%] max-w-sm p-6 rounded-2xl border border-white/10 backdrop-blur-xl relative"
         style={{ background: 'rgba(255,255,255,0.04)' }}>
 
-        {/* Glow effect behind card */}
-        <div className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1))', filter: 'blur(20px)' }} />
-
-        <label className="block text-white/60 text-xs font-bold mb-1 tracking-wide">
+        <p className="text-white/60 text-xs font-bold mb-1 tracking-wide">
           What should we call you?
-        </label>
+        </p>
         <p className="text-white/25 text-[10px] mb-3">Your name will appear on your dashboard</p>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') handleBegin() }}
           placeholder="Enter your name..."
           className="w-full px-4 py-3.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-semibold
             placeholder:text-white/25 outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20
             transition-all duration-300"
           autoFocus
         />
-        <button type="submit" disabled={!name.trim()}
+        <button
+          onClick={handleBegin}
+          disabled={!name.trim()}
           className="w-full mt-4 py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-300
             bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500
             hover:shadow-[0_8px_30px_rgba(99,102,241,0.4)] hover:-translate-y-0.5
             active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed">
           Begin My Journey →
         </button>
-      </form>
+      </div>
 
       {/* Stats */}
       <p className="mt-6 text-[11px] font-semibold text-white/20 tracking-wide text-center">
