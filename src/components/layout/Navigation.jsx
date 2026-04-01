@@ -2,13 +2,13 @@ import { useRef, useCallback } from 'react'
 import { gsap } from '../../animations/gsapSetup'
 
 const TABS = [
-  { id: 'dashboard', label: 'Dashboard', icon: '\uD83D\uDCCA' },
-  { id: 'checklist', label: 'Checklist', icon: '\uD83D\uDCCB' },
-  { id: 'phases', label: 'Phases', icon: '\uD83D\uDDC2' },
-  { id: 'heatmap', label: 'Heatmap', icon: '\uD83D\uDFE9' },
-  { id: 'achievements', label: 'Trophies', icon: '\uD83C\uDFC6' },
-  { id: 'analytics', label: 'Analytics', icon: '\uD83D\uDCC8' },
-  { id: 'timer', label: 'Focus', icon: '\u23F1' },
+  { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+  { id: 'checklist', label: 'Checklist', icon: '📋' },
+  { id: 'phases', label: 'Phases', icon: '🗂' },
+  { id: 'heatmap', label: 'Heatmap', icon: '🟩' },
+  { id: 'achievements', label: 'Trophies', icon: '🏆' },
+  { id: 'analytics', label: 'Analytics', icon: '📈' },
+  { id: 'timer', label: 'Focus', icon: '⏱' },
 ]
 
 export default function Navigation({ activeTab, onTabChange }) {

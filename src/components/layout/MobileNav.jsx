@@ -1,9 +1,9 @@
 const MOBILE_TABS = [
-  { id: 'dashboard', label: 'Home', icon: '\uD83D\uDCCA' },
-  { id: 'checklist', label: 'Tasks', icon: '\uD83D\uDCCB' },
-  { id: 'phases', label: 'Phases', icon: '\uD83D\uDDC2' },
-  { id: 'achievements', label: 'Trophies', icon: '\uD83C\uDFC6' },
-  { id: 'timer', label: 'Focus', icon: '\u23F1' },
+  { id: 'dashboard', label: 'Home', icon: '📊' },
+  { id: 'checklist', label: 'Tasks', icon: '📋' },
+  { id: 'phases', label: 'Phases', icon: '🗂' },
+  { id: 'achievements', label: 'Trophies', icon: '🏆' },
+  { id: 'timer', label: 'Focus', icon: '⏱' },
 ]
 
 export default function MobileNav({ activeTab, onTabChange }) {

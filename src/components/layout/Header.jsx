@@ -120,7 +120,7 @@ export default function Header() {
               }}
               aria-label="Toggle theme"
             >
-              {isDark ? '\u2600\uFE0F' : '\uD83C\uDF19'}
+              {isDark ? '☀️' : '🌙'}
             </button>
 
             {/* Progress Ring */}
@@ -140,7 +140,7 @@ export default function Header() {
                   border: '1px solid rgba(251,146,60,0.25)',
                 }}
               >
-                <span className="text-lg leading-none">{'\uD83D\uDD25'}</span>
+                <span className="text-lg leading-none">🔥</span>
                 <span className="text-sm font-bold font-mono text-[#fb923c]">
                   {streak}
                 </span>
@@ -154,12 +154,12 @@ export default function Header() {
 
         {/* Stats row */}
         <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          <StatBadge icon="\u2705" label="Done" value={totalDone} />
-          <StatBadge icon="\uD83D\uDCCB" label="Left" value={remaining} />
-          <StatBadge icon="\uD83D\uDCC2" label="Phases" value={phaseData.length} />
-          <StatBadge icon="\uD83C\uDFC5" label="Badges" value={earnedAchievements.length} />
+          <StatBadge icon="✅" label="Done" value={totalDone} />
+          <StatBadge icon="📋" label="Left" value={remaining} />
+          <StatBadge icon="🎯" label="Phases" value={phaseData.length} />
+          <StatBadge icon="🏆" label="Badges" value={earnedAchievements.length} />
           <StatBadge
-            icon="\uD83C\uDFAF"
+            icon="📍"
             label="Current Phase"
             value={currentPhase?.name || 'N/A'}
             wide
