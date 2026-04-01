@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Light theme (default) ── */
+:root {
+  --bg: #f8fafc;
+  --bg2: #ffffff;
+  --bg3: #f1f5f9;
+  --tx: #0f172a;
+  --tx2: #475569;
+  --tx3: #94a3b8;
+  --ac: #6366f1;
+  --acl: rgba(99, 102, 241, 0.1);
+  --ok: #22c55e;
+  --wn: #f59e0b;
+  --dn: #ef4444;
+  --bd: #e2e8f0;
+}
+
+/* ── Dark theme ── */
+.dark {
+  --bg: #0a0e1a;
+  --bg2: #111827;
+  --bg3: #1e293b;
+  --tx: #f1f5f9;
+  --tx2: #94a3b8;
+  --tx3: #64748b;
+  --ac: #818cf8;
+  --acl: rgba(129, 140, 248, 0.12);
+  --ok: #4ade80;
+  --wn: #fbbf24;
+  --dn: #f87171;
+  --bd: #1e293b;
+}
+
+/* ── Smooth scroll ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Selection ── */
+::selection {
+  background-color: var(--ac);
+  color: #ffffff;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--tx3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tx2);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--tx3) var(--bg);
+}
