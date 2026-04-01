@@ -1,9 +1,17 @@
 import { useState, useRef, useEffect } from 'react'
-import { MessageCircle, X, Send } from 'lucide-react'
+import { MessageCircle, X, Send, Linkedin, Twitter, Instagram, AtSign, Globe } from 'lucide-react'
 import { gsap } from '../../animations/gsapSetup'
-import { sendMessage } from '../../utils/emailService'
+import { OWNER } from '../../config/siteConfig'
 import ChatMessage from './ChatMessage'
 import { GREETING, QUICK_REPLIES, FAQ, COLLECT_INFO_TRIGGER, COLLECT_MESSAGE, SUCCESS_MESSAGE, FALLBACK_RESPONSE } from './chatbotConfig'
+
+const SOCIAL = [
+  { href: OWNER.social.linkedin, icon: Linkedin, label: 'LinkedIn' },
+  { href: OWNER.social.twitter, icon: Twitter, label: 'Twitter' },
+  { href: OWNER.social.threads, icon: AtSign, label: 'Threads' },
+  { href: OWNER.social.instagram, icon: Instagram, label: 'Instagram' },
+  { href: OWNER.social.portfolio, icon: Globe, label: 'Portfolio' },
+]
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
@@ -14,7 +22,6 @@ export default function ChatWidget() {
   const [sending, setSending] = useState(false)
   const [showQuickReplies, setShowQuickReplies] = useState(true)
   const panelRef = useRef(null)
-  const btnRef = useRef(null)
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
@@ -59,9 +66,6 @@ export default function ChatWidget() {
     const q = input.toLowerCase().trim()
     setInput('')
 
-    const faqMatch = Object.entries(FAQ).find(([, v]) =>
-      v.answer && (q.includes('xp') || q.includes('save') || q.includes('course') || q.includes('how'))
-    )
     if (q.includes('xp') || q.includes('level')) {
       addBotMsg(FAQ['what-is-xp']?.answer || FALLBACK_RESPONSE)
     } else if (q.includes('save') || q.includes('progress')) {
@@ -76,24 +80,30 @@ export default function ChatWidget() {
     }
   }
 
-  const handleFormSubmit = async () => {
-    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) return
+  const handleFormSubmit = () => {
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      addBotMsg('Please fill in all fields.')
+      return
+    }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       addBotMsg('Please enter a valid email address.')
       return
     }
 
     setSending(true)
-    const result = await sendMessage(form)
-    setSending(false)
 
-    if (result.success) {
-      setCollecting(false)
-      addBotMsg(SUCCESS_MESSAGE)
-      setForm({ name: '', email: '', message: '' })
-    } else {
-      addBotMsg(result.error || 'Something went wrong. Please try again.')
-    }
+    // Build mailto link and open it
+    const subject = encodeURIComponent(`Study Analytics Query from ${form.name}`)
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
+    )
+    const mailTo = `mailto:thisismd.riyash@gmail.com?subject=${subject}&body=${body}`
+    window.open(mailTo, '_blank')
+
+    setSending(false)
+    setCollecting(false)
+    setForm({ name: '', email: '', message: '' })
+    addBotMsg(SUCCESS_MESSAGE)
   }
 
   return (
@@ -103,6 +113,7 @@ export default function ChatWidget() {
         <div ref={panelRef}
           className="fixed z-[9998] bottom-20 right-4 md:bottom-24 md:right-5 w-[calc(100vw-32px)] md:w-[380px] max-h-[70vh] md:max-h-[500px]
             bg-[var(--bg2)] border border-[var(--bd)] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--bd)] bg-[var(--bg3)]">
             <div className="flex items-center gap-2">
@@ -150,6 +161,17 @@ export default function ChatWidget() {
             <div ref={messagesEndRef} />
           </div>
 
+          {/* Social icons bar */}
+          <div className="flex items-center justify-center gap-4 px-4 py-2.5 border-t border-[var(--bd)] bg-[var(--bg3)]">
+            <span className="text-[10px] font-semibold text-[var(--tx3)]">Connect:</span>
+            {SOCIAL.map(({ href, icon: Icon, label }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                className="text-[var(--tx3)] hover:text-[var(--ac)] transition-colors" aria-label={label}>
+                <Icon size={15} strokeWidth={1.8} />
+              </a>
+            ))}
+          </div>
+
           {/* Input */}
           {!collecting && (
             <div className="flex gap-2 p-3 border-t border-[var(--bd)]">
@@ -167,7 +189,7 @@ export default function ChatWidget() {
       )}
 
       {/* Floating button */}
-      <button ref={btnRef} onClick={toggleOpen}
+      <button onClick={toggleOpen}
         className="fixed z-[9998] bottom-4 right-4 md:bottom-5 md:right-5 w-14 h-14 rounded-2xl
           bg-[var(--ac)] text-white shadow-lg shadow-[var(--ac)]/30
           flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
