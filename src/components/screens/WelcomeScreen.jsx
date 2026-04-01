@@ -132,29 +132,17 @@ export default function WelcomeScreen({ onRegister }) {
     const trimmed = name.trim()
     if (!trimmed) return
 
-    // Kill all running animations to prevent conflicts
-    gsap.killTweensOf([avatarRef.current, containerRef.current, rocketRef.current, cardRef.current])
-
-    // Exit animation with fallback
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setUser(trimmed)
-        onRegister?.(trimmed)
-      },
-    })
-
-    if (avatarRef.current) {
-      tl.to(avatarRef.current, { x: 80, opacity: 0, duration: 0.25, ease: 'power2.in' })
-    }
+    // Simple fade out then proceed
     if (containerRef.current) {
-      tl.to(containerRef.current, { opacity: 0, scale: 1.05, duration: 0.4, ease: 'power2.in' }, avatarRef.current ? '-=0.1' : '0')
+      containerRef.current.style.transition = 'opacity 0.4s ease, transform 0.4s ease'
+      containerRef.current.style.opacity = '0'
+      containerRef.current.style.transform = 'scale(1.03)'
     }
 
-    // Safety fallback — if animation somehow doesn't complete in 2s, force proceed
     setTimeout(() => {
       setUser(trimmed)
-      onRegister?.(trimmed)
-    }, 2000)
+      if (onRegister) onRegister(trimmed)
+    }, 450)
   }
 
   const titleText = '100 DAYS'
